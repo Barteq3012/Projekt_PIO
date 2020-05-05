@@ -1,0 +1,13 @@
+.button {
+    -fx-text-fill: white;
+    -fx-font-family: "Arial";
+    -fx-font-size: 21px;
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#002162 , #5D0000);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#5D0000, #002162);
+    -fx-text-fill:gray;
+}
