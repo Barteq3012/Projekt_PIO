@@ -74,7 +74,7 @@ public class CardInHand {
         drawCard.imageView.setPreserveRatio(true);
     }
     public void DrawArrowCards(){
-        Card drawCard = AllCard.GetCard(12);
+        Card drawCard = AllCard.GetCard(13);
         cardsInHand.add(drawCard);
         cardsInHand.add(drawCard);
     }

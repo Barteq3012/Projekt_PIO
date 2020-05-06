@@ -16,15 +16,14 @@ public class Card {
     private boolean chosen = false;
     public int positionOnTable = 0;
 
-    public enum cardType {Fire, Water, Ice, Earth, Weapon, Action, Counter, Potion, Magic}
-
+    public enum cardType {Fire, Water, Ice, Weapon, Action, Counter, Potion, Magic}
     private final cardType type;
 
     //dodatkowe efekty kart
-    private int burn = 6;  // czas nadany przez jedna karte podpalenia
-    private int poisone = 4;   // czas na jaki jedna karta nałoży trucizne
-    private int bleed = 8;   // czas na jaki karta nalozy krwawienie
-    private double freez; // uwarunkuje zamroznie;
+    private final int burn = 6;  // czas nadany przez jedna karte podpalenia
+    private final int poisone = 4;   // czas na jaki jedna karta nałoży trucizne
+    private final int bleed = 8;   // czas na jaki karta nalozy krwawienie
+    private int freez; // uwarunkuje zamroznie; liczby od 0 do 100;
     private boolean flameArmor;  //specjalna zmienna dla plomiennej zbroi
 
 
@@ -40,7 +39,7 @@ public class Card {
      * @param imageName  nazwa obraku przypisanego do karty
      * @param hpIncrease ilość dodawanego hp przez karte
      */
-    public Card(String name, int id, int value, int damage, int armor, cardType type, String imageName, int hpIncrease ) {
+    public Card(String name, int id, int value, int damage, int armor, cardType type, String imageName, int hpIncrease) {
         this.name = name;
         this.id = id;
         this.damage = damage;
@@ -75,74 +74,87 @@ public class Card {
     funkcja służąca do określenia dodatkowych funkcji karty w zależności od jej typu
      */
     public void Action(Player player, Player enemy) {
+        TakeDamage(enemy);
+        GiveArmor(player);
+        GiveHp(player);
         switch (type) {
             case Fire: {
-                TakeDamage(enemy);
-                GiveArmor(player);
-                GiveHp(player);
-                if (name.equals("FireBall")) {
-                    Ignite(enemy);
-                } else if (name.equals("Flame Armor")) {
-                    flameArmor = true;
-                    // nakłada podpalenie jesli przeciwnik uzyje karty broni
-
-                } else if (name.equals("Promethean fire")) {
-                    Ignite(enemy);
+                switch (name) {
+                    case "FireBall" -> Ignite(enemy);
+                    case "Flame Armor" -> FlameArmor(enemy);  // nakłada podpalenie jesli przeciwnik uzyje karty broni
+                    case "Promethean fire" -> Ignite(enemy);
                 }
                 break;
             }
             case Ice: {
-                TakeDamage(enemy);
-                GiveArmor(player);
-                if(value == 1){
+                if (value == 1) {
+                     freez = 25;
+                    Freezing(enemy);
                     // szanse na zamrozenie w 25%
-                }else if(value == 2){
+                } else if (value == 2) {
+                     freez = 30;
+                    Freezing(enemy);
                     // szanse na zamrozenie w 30%
-                }else if (value == 3){
+                } else if (value == 3) {
+                     freez = 80;
+                    Freezing(enemy);
                     //szanse na zamrozenie w 80%
                 }
 
                 break;
             }
-            case Earth: {
-                TakeDamage(enemy);
-                GiveArmor(player);
+            case Magic: {
+                if (name.equals("Joker")) {
+                    // wywołuje wybraną kartę ze stołu; wcześniej rzuconą przez nas karte
+                }else if (name.equals("Medusa Look")){
+                    // zabrania wywołac karte dającą tarcze oraz karty leczace
+                }else if (name.equals("Summon Cerberus")){
+                    Bleeding(enemy);
+                    Poison(enemy);
+                }else if (name.equals("Crown of Immortality")){
+                    player.HealByTurn(true);
+                    // dodaje 2hp co ture
+                }else if (name.equals("Burnout")){
+                    player.Burnout(true);
+                    //zadaje obrazenia z podpalenia i nie zdejmuje go
+                }else if (name.equals("Charon")){
+                    CharonReady(enemy);
+                    // zabija przeciwnika jeśli ma 20 i mniej hp, nie uwzglednia tarczy
+                }
                 break;
             }
             case Action: {
-                TakeDamage(enemy);
-                GiveArmor(player);
                 break;
             }
             case Water: {
-                TakeDamage(enemy);
-                GiveArmor(player);
-                if (name.equals("Tsunami")) {
-                    player.Purification(false,false,false, true);
-                }else if(name.equals("Fog")){
-                    // przeciwnik ma 50% wywołanie efektu karty
-                }else if(name.equals("Poseidon's trident")){
-                    player.Purification(true,true,true,false);
+                switch (name) {
+                    case "Tsunami" -> player.Purification(false, false, false, true);
+                    case "Fog" -> {
+                         freez = 50;
+                        Freezing(enemy);  // przeciwnik ma 50% wywołanie efektu karty
+                    }
+                    case "Poseidon's trident" -> player.Purification(true, true, true, false);
                 }
 
                 break;
             }
             case Weapon: {
-                TakeDamage(enemy);
-                GiveArmor(player);
-                if(name.equals("Bow")){
-                    player.cardInHand.DrawArrowCards();
-                    //dobierane sa do reki dwie karty Arrow
+                switch (name) {
+                    case "Bow" -> player.cardInHand.DrawArrowCards();  //dobierane sa do reki dwie karty Arrow
+                    case "Mace" -> Bleeding(enemy);
+                    case "Dragon Killer" -> player.Purification(false, false, true, false);
                 }
-                break;
-            }
-            case Counter: {
-
                 break;
             }
             case Potion: {
                 TakeDamage(enemy);
                 GiveArmor(player);
+                GiveHp(player);
+                switch (name) {
+                    case "Potion of Poison" -> Poison(enemy);
+                    case "Dragon Blood" -> player.SaveHp(player);
+                    case "Tulip" -> Bleeding(enemy);
+                }
 
                 break;
             }
@@ -174,22 +186,34 @@ public class Card {
 
     // podanie dlugosci podpalenia
     private void Ignite(Player player) {
-        player.GetBurnTime(burn);
+        player.AddBurnTime(burn);
     }
 
     //podanie dlugosci zatrucia
     private void Poison(Player player) {
-        player.GetPoisonTime(poisone);
+        player.AddPoisonTime(poisone);
+    }
+
+    public cardType GetCardType(){
+        return type;
     }
 
     // podanie dlugosci krwaweinia
     private void Bleeding(Player player) {
-        player.GetBleedingTime(bleed);
+        player.AddBleedingTime(bleed);
     }
 
     // podanie szans na zamrozenie
     private void Freezing(Player player) {
         player.GetFreezing(freez);
+    }
+
+    // funkcja potrzebna do karty charona
+    private void CharonReady(Player player){
+        player.Charon(true);
+    }
+    private void FlameArmor(Player player){
+        player.FlameArmorUsed(true);
     }
 
     private void setChosen() {
