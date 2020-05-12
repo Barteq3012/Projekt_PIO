@@ -8,13 +8,23 @@ public class Card {
     // podstawowe informacje do karty
     private final String name;
     private final int id;
+    public ImageView imageView;
+
+    private final int value;
     private final int damage;
     private final int armor;
-    private final int value;
     private final int hpIncrease;
-    public ImageView imageView;
+    private String imageName;
+
+    public Player owner;
+
     private boolean chosen = false;
+    public boolean onTable = false;
     public int positionOnTable = 0;
+    public double absolutePosition;
+
+    public boolean alreadyRandToDeck = false;
+    public boolean alreadyRandToSmallDeck = false;
 
     public enum cardType {Fire, Water, Ice, Weapon, Action, Counter, Potion, Magic}
     private final cardType type;
@@ -25,7 +35,6 @@ public class Card {
     private final int bleed = 8;   // czas na jaki karta nalozy krwawienie
     private int freez; // uwarunkuje zamroznie; liczby od 0 do 100;
     private boolean flameArmor;  //specjalna zmienna dla plomiennej zbroi
-
 
     /**
      * wyjasnienie danych do objektu Card
@@ -40,6 +49,7 @@ public class Card {
      * @param hpIncrease ilość dodawanego hp przez karte
      */
     public Card(String name, int id, int value, int damage, int armor, cardType type, String imageName, int hpIncrease) {
+
         this.name = name;
         this.id = id;
         this.damage = damage;
@@ -47,16 +57,28 @@ public class Card {
         this.hpIncrease = hpIncrease;
         this.type = type;
         this.value = value;
+        this.imageName = imageName;
+
         Image image = new Image(getClass().getResourceAsStream(imageName));
         imageView = new ImageView(image);
+
         imageView.setOnMouseEntered(e -> {
 
-            imageView.setSmooth(false);
+            imageView.toFront(); //wyświetlanie na wierzchu
+
+            imageView.setSmooth(false); //lepsza jakość czy szybkość podczas skalowania
             imageView.setScaleX(1.5);
             imageView.setScaleY(1.5);
 
         });
+
         imageView.setOnMouseExited(e -> {
+
+            if(onTable) {
+
+                owner.setNiceCards(); // jesli karta na stole to po zjechaniu układa ładnie karty
+            }
+
 
             imageView.setSmooth(false);
             imageView.setScaleX(1);
@@ -66,7 +88,9 @@ public class Card {
 
         imageView.setOnMouseClicked(ee -> {
 
-            setChosen();
+            if(Game.ready) {
+                setChosen();
+            }
         });
     }
 
@@ -212,6 +236,7 @@ public class Card {
     private void CharonReady(Player player){
         player.Charon(true);
     }
+
     private void FlameArmor(Player player){
         player.FlameArmorUsed(true);
     }
@@ -226,5 +251,36 @@ public class Card {
         return chosen;
     }
 
+    public int getValue() {
+        return value;
+    }
+
+    public cardType getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getArmor() {
+        return armor;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public int getHpIncrease() {
+        return hpIncrease;
+    }
 }
 

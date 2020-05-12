@@ -1,9 +1,14 @@
 package application;
 
+import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
+import javafx.geometry.Bounds;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class CardInHand {
 
@@ -12,13 +17,17 @@ public class CardInHand {
     public Pane hand = new Pane();
 
     private Card cardToThrow;
-    private Card drawCard;
 
     public boolean readyToThrown = false;
-    public boolean alreadyThrown = false;
+    private boolean initialization = false;
+    private int initNumber = 0;
 
     private int positionX = 0;
     public int[] inHandPosition = new int[9];
+
+    private Random generator = new Random();
+
+    private int size = 0;
 
 
     public CardInHand(int handPositionX, int handPositionY, Pane table) {
@@ -29,6 +38,7 @@ public class CardInHand {
         hand.setLayoutY(handPositionY);
         hand.setPrefSize(100,20);
 
+
         for(int i = 0; i<9; i++) {
 
             inHandPosition[i] = 0;
@@ -37,20 +47,19 @@ public class CardInHand {
 
     public void chooseCardFromHand() {
 
-            for (Card cardFromHand: cardsInHand) {
+        for (Card cardFromHand: cardsInHand) {
 
-                boolean chosen = cardFromHand.getChosen();
+            boolean chosen = cardFromHand.getChosen();
 
-                if (chosen == true) {
+            if (chosen) {
 
-                    cardToThrow = cardFromHand;
+                cardToThrow = cardFromHand;
 
-                    readyToThrown = true;
-                }
+                readyToThrown = true;
             }
+        }
 
         cardsInHand.remove(cardToThrow);
-        alreadyThrown = true;
     }
 
     public Card getCardFromHand() {
@@ -58,44 +67,96 @@ public class CardInHand {
         return cardToThrow;
     }
 
+    public Card getCardFromEnemyHand() {
+
+        setSize();
+
+        int randomCardId = generator.nextInt(size);
+
+        Card drawCard = cardsInHand.get(randomCardId);
+
+        cardsInHand.remove(drawCard);
+
+        return drawCard;
+    }
+
     public void drawCardsFromSmallDeck(SmallDeckOfCards smallDeck) {
 
-        moveCard();
-
-        drawCard = smallDeck.getCardFromSmallDeck();
+        Card drawCard = smallDeck.getCardFromSmallDeck();
         cardsInHand.add(drawCard);
+        drawAnimation(drawCard);
+
+        smallDeck.setSize();
+
+        if(smallDeck.getSize() > 0) {
+
+            drawCard = smallDeck.getCardFromSmallDeck();
+            cardsInHand.add(drawCard);
+            drawAnimation(drawCard);
+        }
+    }
+
+    public void DrawArrowCards(){
+
+        Card drawCard = AllCard.getCard(12);
+
+        Card newCard1 = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
+                drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
+
+        cardsInHand.add(newCard1);
+        drawAnimation(newCard1);
+
+        Card newCard = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
+                drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
+
+        cardsInHand.add(newCard);
+        drawAnimation(newCard);
+    }
+
+    public void initHand(SmallDeckOfCards smallDeck) {
+
+        initialization = true;
+
+        for(int i=0; i<3; i++) {
+
+            Card drawCard = smallDeck.getCardFromSmallDeck();
+            cardsInHand.add(drawCard);
+
+            drawAnimation(drawCard);
+        }
+    }
+
+    private void drawAnimation(Card drawCard) {
+
+        moveCard();
 
         drawCard.positionOnTable = positionX/100;
         inHandPosition[positionX/100] = 1;
 
         hand.getChildren().add(drawCard.imageView);
-        drawCard.imageView.setX(positionX);
         drawCard.imageView.fitWidthProperty().bind(hand.widthProperty());
         drawCard.imageView.setPreserveRatio(true);
-    }
-    public void DrawArrowCards(){
-        Card drawCard = AllCard.GetCard(13);
-        cardsInHand.add(drawCard);
-        cardsInHand.add(drawCard);
-    }
+        drawCard.imageView.setX(positionX);
 
-    public void initHand(SmallDeckOfCards smallDeck) {
+        TranslateTransition t = new TranslateTransition(Duration.millis(1500), drawCard.imageView);
+        t.setFromX(1000);
+        // t.setFromY(0);
+        t.setToX(positionX - drawCard.imageView.getX());
 
-        for(int i=0; i<3; i++) {
+        t.play();
 
-            drawCard = smallDeck.getCardFromSmallDeck();
-            cardsInHand.add(drawCard);
+        t.setOnFinished((ActionEvent evt) -> {
 
-            drawCard.positionOnTable = i;
-            inHandPosition[i] = 1;
+            if(initialization = true) {
+                initNumber++;
 
-            hand.getChildren().add(drawCard.imageView);
-            drawCard.imageView.setX(positionX);
-            drawCard.imageView.fitWidthProperty().bind(hand.widthProperty());
-            drawCard.imageView.setPreserveRatio(true);
-
-            moveCard();
-        }
+                if(initNumber == 3) {
+                    Game.ready = true;
+                    initialization = false;
+                }
+            }
+            t.stop();
+        });
     }
 
     public boolean emptyHand ()
@@ -113,11 +174,19 @@ public class CardInHand {
 
             if(inHandPosition[i] == 0) {
 
-                positionX = 110 * i;
+                positionX = 105 * i;
                 break;
             }
         }
     }
 
-}
+    public void setSize() {
 
+        size = cardsInHand.size();
+    }
+
+    public int getSize() {
+
+        return size;
+    }
+}

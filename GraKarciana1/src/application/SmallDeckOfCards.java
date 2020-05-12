@@ -14,15 +14,29 @@ public class SmallDeckOfCards {
 
 
     public SmallDeckOfCards() {
-/*
-        smallDeck.add(new Card("/pictures/card1.png", 1));
-        smallDeck.add(new Card("/pictures/card2.png", 2));
-        smallDeck.add(new Card("/pictures/card3.png", 3));
-        smallDeck.add(new Card("/pictures/card4.png", 4));
-        smallDeck.add(new Card("/pictures/card5.png", 5));
-        smallDeck.add(new Card("/pictures/card6.png", 6));
 
- */
+    }
+
+    public void setSmallDeck(DeckOfCards deck) {
+
+        for(int i = 0 ; i < 15; i++) {
+
+            supDraw(deck);
+        }
+    }
+
+    private void supDraw(DeckOfCards deck){
+
+        Card drawCard = deck.getCard();
+        if(!drawCard.alreadyRandToSmallDeck) {
+
+            smallDeck.add(drawCard);
+            drawCard.alreadyRandToSmallDeck = true;
+        }
+        else {
+
+            supDraw(deck);
+        }
     }
 
     public Card getCardFromSmallDeck() {
@@ -36,7 +50,6 @@ public class SmallDeckOfCards {
         smallDeck.remove(drawCard);
 
         return drawCard;
-
     }
 
     public void setSize() {

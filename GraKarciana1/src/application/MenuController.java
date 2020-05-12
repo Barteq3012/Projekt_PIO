@@ -14,7 +14,7 @@ import javafx.stage.StageStyle;
 
 public class MenuController {
 
-	Duel duel = new Duel();
+	Duel duel;
 
 
 	@FXML
@@ -31,11 +31,11 @@ public class MenuController {
     void actionOfDuelButton(ActionEvent event) {
     	try {
 
-
     		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Table.fxml"));
     		Pane tableRoot =  fxmlLoader.load();
 
-			duel.game.setTable(tableRoot);
+			duel = new Duel(tableRoot);
+			//duel.game.setTable(tableRoot);
 
     		Stage tableStage = new Stage();
     		tableStage.setScene(new Scene(tableRoot));

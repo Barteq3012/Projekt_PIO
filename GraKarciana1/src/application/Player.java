@@ -1,19 +1,32 @@
 package application;
 
-import java.util.Random;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
+import javafx.animation.TranslateTransition;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 public class Player {
 
     public int hp;
     public int sp;
-    public int cardsOnStack;
+    public int numberOfCardsOnStack;
     public String name;
 
     // Nadaje sobie przeciwnika; wskaznik do oponenta
     private Player myEnemy;
+
+    public Card card;
+    public CardInHand cardInHand;
+
+    public boolean ready = false;
+
+    public List<Card> cardsOntable = new ArrayList<>();
+
+    public int positionX = 0;
+    public int supPositionX = 60; // do obliczania pozycji po ściśnięciu kart
 
     // zmienne dotyczące efektów nakładanych przez karte i efektów czasowych
     private int burnTime;   // nadanie czasu trwania podpalenia
@@ -27,16 +40,11 @@ public class Player {
     private int lostHp;  // zmienna stworzona na rzecz karty dragon blood
     private int randomNumber; // liczba posłużąca do określenia procentowych sznas
 
-    public Random random;
-    public Card card;
-    public CardInHand cardInHand;
-
-    private Pane placeOnTable = new Pane();
-
-    private int positionX = 0;
+    public Random random = new Random();
 
 
     public Player(String name, int hp, int sp, CardInHand cardInHand) {
+
         this.name = name;
         this.hp = hp;
         this.sp = sp;
@@ -44,6 +52,7 @@ public class Player {
     }
 
     public void SetMyEnemy(Player player) {
+
         myEnemy = player;
     }
 
@@ -58,41 +67,89 @@ public class Player {
         }
         LetBurnout(myEnemy);
 
-        placeOnTable.getChildren().add(card.imageView);
-        card.imageView.setX(positionX);
-        card.imageView.fitWidthProperty().bind(placeOnTable.widthProperty());
-        card.imageView.setPreserveRatio(true);
-
-
         // losuje liczbe aby potem użyć do stwierdzenia czy efekt karty sie wywoła czy nie
         randomNumber = random.nextInt(101);
+
         if (randomNumber < freezing) {
-            freezing = 0;  // wyzerowanie miennej odpowiedzialenj za brak uzycia akcji karty
+            freezing = 0;  // wyzerowanie zmiennej odpowiedzialenj za brak uzycia akcji karty
         } else {
             // wywołanie akcji karty
             card.Action(this, myEnemy);
         }
+
         FlameArmorEffect(card);
 
         // wywołanie wszystkich efektów czasowych
         GetBleedingDamage();
         GetBurnDamage();
         GetPoisonDamage();
-
-        moveCard();
     }
 
-    private void moveCard() {
+    //metoda do animacji rzucania kart
+    public void moveCard(int id) {
 
-        positionX += 110;
+        TranslateTransition t = new TranslateTransition(Duration.millis(1000), card.imageView);
+
+        card.imageView.toFront();
+
+        t.setFromX(0);
+        t.setFromY(0);
+        t.setToX(positionX - card.imageView.getX());
+
+        card.absolutePosition = positionX - card.imageView.getX(); //pozycja karty po rzuceniu
+
+        // wsp. Y położenia kart rzuconych, 1 - gracz, 2 - wróg
+
+        if (id == 1) {
+            t.setToY(-160);
+        } else if (id == 2) {
+            t.setToY(250);
+        }
+
+        t.play();
+
+        // po zakończeniu animacji
+
+        t.setOnFinished(e -> {
+
+            // przy 8 karty ścisnął się
+            if (cardsOntable.size() == 8) {
+
+                //pętla przesuwa wszytskie rzucone już karty z wyjątkiem pierwszej
+                for (Card card : cardsOntable) {
+
+                    if (cardsOntable.indexOf(card) != 0) {
+
+                        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), card.imageView);
+
+                        tt.setFromX(card.absolutePosition);
+                        tt.setToX(card.absolutePosition - supPositionX);
+                        tt.play();
+                        supPositionX += 60;
+                    }
+                }
+
+                positionX = positionX + 110 - supPositionX; // nowa pozycja po zagęszceniu
+
+            } else if (cardsOntable.size() > 8) {
+                //po zagęszczeniu co ile układać
+                positionX += 70;
+            } else {
+                //przed zagęszczeniem co ile układać
+                positionX += 110;
+            }
+
+            t.stop();
+        });
     }
 
-    public void setPlaceOnTable(int placePositionX, int placePositionY, Pane table) {
-        table.getChildren().add(placeOnTable);
+    // metoda po kolei układa rzucone karty na wierzch
+    public void setNiceCards() {
 
-        placeOnTable.setLayoutX(placePositionX);
-        placeOnTable.setLayoutY(placePositionY);
-        placeOnTable.setPrefSize(100, 100);
+        for (Card card : cardsOntable) {
+
+            card.imageView.toFront();
+        }
     }
 
     // funkcja zadajaca obrazenia i odejmująca tarcze
@@ -226,8 +283,6 @@ public class Player {
     }
 
     public void takeCard() {
-        cardsOnStack--;
+        numberOfCardsOnStack--;
     }
-
-
 }
