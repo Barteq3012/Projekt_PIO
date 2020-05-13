@@ -4,7 +4,12 @@ import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -15,6 +20,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Game {
@@ -29,6 +35,7 @@ public class Game {
     public Player player;
     public Player enemy;
 
+    Button scores = new Button("Wyniki");
     Image imgCardStack = new Image("/pictures/cardBack.jpg");
 
     Text textPlayerName = new Text();
@@ -36,7 +43,6 @@ public class Game {
     Text textPlayerSp = new Text();
     Text textPlayerStack = new Text();
     ImageView imgPlayerCardStack = new ImageView();
-
 
     Text textOpponentName = new Text();
     Text textOpponentHp = new Text();
@@ -207,10 +213,13 @@ public class Game {
 
                 enemy.moveCard(2);
                 enemy.throwCard();
+
                 textPlayerHp.setText(String.valueOf(player.hp));
                 textPlayerSp.setText(String.valueOf(player.sp));
                 textOpponentSp.setText(String.valueOf(enemy.sp));
                 textOpponentHp.setText(String.valueOf(enemy.hp));
+
+
                 System.out.println("Po akcji wroga:");
                 System.out.println("Gracz: hp" + player.hp + " sp: " + player.sp);
                 System.out.println("wróg: hp " + enemy.hp + " sp: " + enemy.sp);
@@ -290,6 +299,25 @@ public class Game {
                 if (playerCardInHand.emptyHand() && enemyCardInHand.emptyHand()) {
 
                     System.out.println("Koniec gry!");
+
+                    showButtonScores();
+                    scores.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            if (player.hp > enemy.hp)
+                            {
+                                win();
+                                ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                            }
+                            else
+                            {
+                                lose();
+                                ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                            }
+                        }
+                    });
+
+
                 } else {
 
                     textAnimation();
@@ -312,6 +340,24 @@ public class Game {
 
             isEnd = true;
             System.out.println("Koniec gry!");
+
+            showButtonScores();
+            scores.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    if (player.hp > enemy.hp)
+                    {
+                        win();
+                        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                    }
+                    else
+                    {
+                        lose();
+                        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                    }
+                }
+            });
+
         }
     }
 
@@ -325,13 +371,13 @@ public class Game {
 
         table.getChildren().add(text);
 
-        FadeTransition ft = new FadeTransition(Duration.millis(1500), text);
+        FadeTransition ft = new FadeTransition(Duration.millis(750), text);
         ft.setFromValue(0.0);
         ft.setToValue(1.0);
         ft.setCycleCount(2);
         ft.setAutoReverse(true);
 
-        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(3000), text);
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(1500), text);
         scaleTransition.setByY(7);
         scaleTransition.setByX(7);
         scaleTransition.setAutoReverse(false);
@@ -467,12 +513,113 @@ public class Game {
         table.getChildren().add(textOpponentStack);
     }
 
+    void showButtonScores()
+    {
 
- /*   void endGame() {
+        scores.setLayoutX(537.0);
+        scores.setLayoutY(331.0);
+        scores.setMnemonicParsing(false);
+        scores.setPrefHeight(39.0);
+        scores.setPrefWidth(206.0);
+        scores.getStylesheets().add("/design/button.css");
 
-        Image image = new Image(getClass().getResourceAsStream("endgame.png"));
-        ImageView imageView = new ImageView(image);
-        table.getChildren().add(imageView);
+        table.getChildren().add(scores);
+    }
 
-    } */
+    void win() {
+
+
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Win.fxml"));
+            Pane winPane =  fxmlLoader.load();
+
+
+            Stage scoreStage = new Stage();
+            scoreStage.setScene(new Scene(winPane));
+            scoreStage.show();
+            scoreStage.setAlwaysOnTop(false);
+            scoreStage.setOpacity(1);
+            scoreStage.setTitle("Wynik");
+            scoreStage.getIcons().add(new Image("pictures/icon.png"));
+            System.out.println("Wynik");
+
+            DropShadow ds = new DropShadow();
+            ds.setOffsetY(10.0f);
+            ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+
+            Text scorePlayer = new Text();
+            Text scoreOpponent = new Text();
+
+            scorePlayer.setEffect(ds);
+            scorePlayer.setText(String.valueOf(player.hp));
+            scorePlayer.setFill(Color.WHITE);
+            scorePlayer.setX(80);
+            scorePlayer.setY(380);
+            scorePlayer.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, 80));
+
+            scoreOpponent.setEffect(ds);
+            scoreOpponent.setText(String.valueOf(enemy.hp));
+            scoreOpponent.setFill(Color.WHITE);
+            scoreOpponent.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, 80));
+            scoreOpponent.setX(460);
+            scoreOpponent.setY(380);
+
+            winPane.getChildren().addAll(scorePlayer);
+            winPane.getChildren().addAll(scoreOpponent);
+
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+    }
+
+    void lose()
+    {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Lose.fxml"));
+            Pane losePane =  fxmlLoader.load();
+
+            Stage scoreStage = new Stage();
+            scoreStage.setScene(new Scene(losePane));
+            scoreStage.show();
+            scoreStage.setAlwaysOnTop(false);
+            scoreStage.setOpacity(1);
+            scoreStage.setTitle("Wynik");
+            scoreStage.getIcons().add(new Image("pictures/icon.png"));
+            System.out.println("Wynik");
+
+            DropShadow ds = new DropShadow();
+            ds.setOffsetY(10.0f);
+            ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+
+            Text scorePlayer = new Text();
+            Text scoreOpponent = new Text();
+
+            scorePlayer.setEffect(ds);
+            scorePlayer.setText(String.valueOf(player.hp));
+            scorePlayer.setFill(Color.WHITE);
+            scorePlayer.setX(80);
+            scorePlayer.setY(380);
+            scorePlayer.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, 80));
+
+            scoreOpponent.setEffect(ds);
+            scoreOpponent.setText(String.valueOf(enemy.hp));
+            scoreOpponent.setFill(Color.WHITE);
+            scoreOpponent.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, 80));
+            scoreOpponent.setX(460);
+            scoreOpponent.setY(380);
+
+            losePane.getChildren().addAll(scorePlayer);
+            losePane.getChildren().addAll(scoreOpponent);
+
+
+
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
 }

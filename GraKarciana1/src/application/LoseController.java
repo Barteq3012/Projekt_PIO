@@ -14,7 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class ScoreboardController {
+public class LoseController {
 
     @FXML
     private AnchorPane scoreAnchorPane;

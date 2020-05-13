@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="scoreAnchorPane" prefHeight="500.0" prefWidth="700.0" styleClass="bodybg" stylesheets="@WinBackground.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.WinController">
+   <children>
+      <Text fx:id="gameStatus" fill="#ffe800" layoutX="50.0" layoutY="96.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" text="Zwycięstwo" textAlignment="CENTER" wrappingWidth="600.0">
+         <font>
+            <Font name="Bookman Old Style Bold" size="85.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Text>
+      <Text fill="WHITE" layoutX="122.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TY">
+         <font>
+            <Font name="Britannic Bold" size="40.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Text>
+      <Text fx:id="opponentPoints" fill="WHITE" layoutX="429.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PRZECIWNIK">
+         <font>
+            <Font name="Britannic Bold" size="40.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Text>
+      <Text layoutX="48.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Button fx:id="menuButton" layoutX="248.0" layoutY="420.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="25.0" prefWidth="181.0" text="Powrót do Menu" />
+   </children>
+</AnchorPane>

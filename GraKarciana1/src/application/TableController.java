@@ -11,8 +11,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
-import java.io.IOException;
-
 public class TableController {
 
 //    public static String playerNameOf;
@@ -69,7 +67,7 @@ public class TableController {
 
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Scoreboard.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Pass.fxml"));
             Pane scoreboard =  fxmlLoader.load();
 
 
