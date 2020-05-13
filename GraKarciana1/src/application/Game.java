@@ -5,9 +5,15 @@ import javafx.animation.ScaleTransition;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -23,6 +29,28 @@ public class Game {
     public Player player;
     public Player enemy;
 
+    Image imgCardStack = new Image("/pictures/cardBack.jpg");
+
+    Text textPlayerName = new Text();
+    Text textPlayerHp = new Text();
+    Text textPlayerSp = new Text();
+    Text textPlayerStack = new Text();
+    ImageView imgPlayerCardStack = new ImageView();
+
+
+    Text textOpponentName = new Text();
+    Text textOpponentHp = new Text();
+    Text textOpponentSp = new Text();
+    Text textOpponentStack = new Text();
+    ImageView imgOpponentCardStack = new ImageView();
+
+
+
+    public String playerName = "Bartek";
+    public String opponentName = "Kartek";
+
+ //  public TableController tableControl;
+
     private Pane table;
 
     public static boolean ready = false;
@@ -36,15 +64,28 @@ public class Game {
         playerCardInHand = new CardInHand(180, 540, table);
         enemyCardInHand = new CardInHand(180, -150, table);
 
-        player = new Player("Bartek", 200, 10, playerCardInHand);
-        enemy = new Player("Rektor", 200, 10, enemyCardInHand);
+        player = new Player(playerName, 200, 10, playerCardInHand);
+        enemy = new Player(opponentName, 200, 10, enemyCardInHand);
     }
+
 
     public void startGame() {
 
         // przypisuje wskazniki; gracz ma namiar na swojego przciwnika i na odwrot
-        player.SetMyEnemy(enemy);
-        enemy.SetMyEnemy(player);
+        player.setMyEnemy(enemy);
+        enemy.setMyEnemy(player);
+
+        startPlayerName();
+        startPlayerHp();
+        startPlayerSp();
+        startPlayerStack();
+        startPlayerNumberOfStack();
+
+        startOpponentName();
+        startOpponentHp();
+        startOpponentSp();
+        startOpponentStack();
+        startOpponentNumberOfStack();
 
         //dopiera początkowe karty, po zakońćzeniu animacji game ustawia na ready
         playerCardInHand.initHand(playerSmallDeck);
@@ -113,6 +154,10 @@ public class Game {
         //akcja animacja
         player.moveCard(1);
         player.throwCard();
+        textPlayerHp.setText(String.valueOf(player.hp));
+        textPlayerSp.setText(String.valueOf(player.sp));
+        textOpponentSp.setText(String.valueOf(enemy.sp));
+        textOpponentHp.setText(String.valueOf(enemy.hp));
         System.out.println("Po akcji gracza:");
         System.out.println("Gracz: hp: " + player.hp + " sp: " + player.sp);
         System.out.println("wróg: hp: " + enemy.hp + " sp: " + enemy.sp);
@@ -162,6 +207,10 @@ public class Game {
 
                 enemy.moveCard(2);
                 enemy.throwCard();
+                textPlayerHp.setText(String.valueOf(player.hp));
+                textPlayerSp.setText(String.valueOf(player.sp));
+                textOpponentSp.setText(String.valueOf(enemy.sp));
+                textOpponentHp.setText(String.valueOf(enemy.hp));
                 System.out.println("Po akcji wroga:");
                 System.out.println("Gracz: hp" + player.hp + " sp: " + player.sp);
                 System.out.println("wróg: hp " + enemy.hp + " sp: " + enemy.sp);
@@ -301,6 +350,123 @@ public class Game {
 
 
     }
+
+    private void startPlayerName()
+    {
+
+        textPlayerName.setText(player.name);
+        textPlayerName.setX(20);
+        textPlayerName.setY(670);
+        textPlayerName.setFill(Color.WHITE);
+        textPlayerName.setFont(Font.font("System", FontWeight.MEDIUM, FontPosture.REGULAR, 24));
+        table.getChildren().add(textPlayerName);
+    }
+
+    private void startPlayerHp()
+    {
+        textPlayerHp.setText(String.valueOf(player.hp));
+        textPlayerHp.setX(1200);
+        textPlayerHp.setY(480);
+        textPlayerHp.setFill(Color.BLACK);
+        textPlayerHp.setFont(Font.font("System", FontWeight.MEDIUM, FontPosture.REGULAR, 28));
+        table.getChildren().add(textPlayerHp);
+    }
+
+    private void startPlayerSp()
+    {
+        textPlayerSp.setText(String.valueOf(player.sp));
+        textPlayerSp.setX(1205);
+        textPlayerSp.setY(610);
+        textPlayerSp.setFill(Color.BLACK);
+        textPlayerSp.setFont(Font.font("System", FontWeight.MEDIUM, FontPosture.REGULAR, 28));
+        table.getChildren().add(textPlayerSp);
+    }
+
+    private void startPlayerStack()
+    {
+        //1173 107
+        imgPlayerCardStack.setImage(imgCardStack);
+        imgPlayerCardStack.setFitHeight(135.0);
+        imgPlayerCardStack.setFitWidth(84.0);
+        imgPlayerCardStack.setLayoutX(18.0);
+        imgPlayerCardStack.setLayoutY(500.0);
+        imgPlayerCardStack.setPickOnBounds(true);
+        imgPlayerCardStack.setPreserveRatio(true);
+        table.getChildren().add(imgPlayerCardStack);
+
+    }
+
+    private void startPlayerNumberOfStack()
+    {
+        textPlayerStack.setText(String.valueOf(player.numberOfCardsOnStack));
+        textPlayerStack.setFont(Font.font("System", FontWeight.MEDIUM, FontPosture.REGULAR, 25));
+        textPlayerStack.setFill(Color.WHITE);
+        textPlayerStack.setLayoutX(87.0);
+        textPlayerStack.setLayoutY(612.0);
+        textPlayerStack.setStrokeType(StrokeType.OUTSIDE);
+        textPlayerStack.setStrokeWidth(0.0);
+        textPlayerStack.setWrappingWidth(20.0);
+        table.getChildren().add(textPlayerStack);
+    }
+
+    private void startOpponentName()
+    {
+
+        textOpponentName.setText(enemy.name);
+        textOpponentName.setX(1180);
+        textOpponentName.setY(40);
+        textOpponentName.setFill(Color.WHITE);
+        textOpponentName.setFont(Font.font("System", FontWeight.MEDIUM, FontPosture.REGULAR, 24));
+        table.getChildren().add(textOpponentName);
+    }
+
+    private void startOpponentHp()
+    {
+        textOpponentHp.setText(String.valueOf(enemy.hp));
+        textOpponentHp.setX(40);
+        textOpponentHp.setY(110);
+        textOpponentHp.setFill(Color.BLACK);
+        textOpponentHp.setFont(Font.font("System", FontWeight.MEDIUM, FontPosture.REGULAR, 28));
+        table.getChildren().add(textOpponentHp);
+    }
+
+    private void startOpponentSp()
+    {
+        textOpponentSp.setText(String.valueOf(enemy.sp));
+        textOpponentSp.setX(40);
+        textOpponentSp.setY(225);
+        textOpponentSp.setFill(Color.BLACK);
+        textOpponentSp.setFont(Font.font("System", FontWeight.MEDIUM, FontPosture.REGULAR, 28));
+        table.getChildren().add(textOpponentSp);
+    }
+
+    private void startOpponentStack()
+    {
+        //1173 107
+        imgOpponentCardStack.setImage(imgCardStack);
+        imgOpponentCardStack.setFitHeight(135.0);
+        imgOpponentCardStack.setFitWidth(84.0);
+        imgOpponentCardStack.setLayoutX(1173.0);
+        imgOpponentCardStack.setLayoutY(107.0);
+        imgOpponentCardStack.setPickOnBounds(true);
+        imgOpponentCardStack.setPreserveRatio(true);
+        table.getChildren().add(imgOpponentCardStack);
+
+    }
+
+    private void startOpponentNumberOfStack()
+    {
+        textOpponentStack.setText(String.valueOf(enemy.numberOfCardsOnStack));
+        textOpponentStack.setFont(Font.font("System", FontWeight.MEDIUM, FontPosture.REGULAR, 25));
+        textOpponentStack.setFill(Color.WHITE);
+        textOpponentStack.setLayoutX(1237.0);
+        textOpponentStack.setLayoutY(222.0);
+        textOpponentStack.setStrokeType(StrokeType.OUTSIDE);
+        textOpponentStack.setStrokeWidth(0.0);
+        textOpponentStack.setWrappingWidth(20.0);
+        table.getChildren().add(textOpponentStack);
+    }
+
 
  /*   void endGame() {
 

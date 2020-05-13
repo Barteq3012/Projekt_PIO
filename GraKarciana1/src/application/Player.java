@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import javafx.animation.TranslateTransition;
-import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public class Player {
@@ -51,7 +50,7 @@ public class Player {
         this.cardInHand = cardInHand;
     }
 
-    public void SetMyEnemy(Player player) {
+    public void setMyEnemy(Player player) {
 
         myEnemy = player;
     }
@@ -60,12 +59,12 @@ public class Player {
         //funkcja stworzona na potrzeby dragon blood; słuzy do przeprowadzenia kontrataku na przeciwniku za poprzednia ture, nie uwzgledznia tarczy
         if (lostHp > hp) {
             lostHp = lostHp - hp;
-            Riposte(myEnemy);
+            riposte(myEnemy);
         }
         if (crownReady) {
             hp += 2;
         }
-        LetBurnout(myEnemy);
+        letBurnout(myEnemy);
 
         // losuje liczbe aby potem użyć do stwierdzenia czy efekt karty sie wywoła czy nie
         randomNumber = random.nextInt(101);
@@ -74,15 +73,15 @@ public class Player {
             freezing = 0;  // wyzerowanie zmiennej odpowiedzialenj za brak uzycia akcji karty
         } else {
             // wywołanie akcji karty
-            card.Action(this, myEnemy);
+            card.action(this, myEnemy);
         }
 
-        FlameArmorEffect(card);
+        flameArmorEffect(card);
 
         // wywołanie wszystkich efektów czasowych
-        GetBleedingDamage();
-        GetBurnDamage();
-        GetPoisonDamage();
+        getBleedingDamage();
+        getBurnDamage();
+        getPoisonDamage();
     }
 
     //metoda do animacji rzucania kart
@@ -182,7 +181,7 @@ public class Player {
     }
 
     // funkcja zadajaca obrazenia z podpalenia
-    public void GetBurnDamage() {
+    public void getBurnDamage() {
         if (burnTime > 0) {
             hp -= 2;
             burnTime -= 1;
@@ -190,12 +189,12 @@ public class Player {
     }
 
     //funkcja dodaj czas trwania zatrucia
-    public void AddPoisonTime(int poison) {
+    public void addPoisonTime(int poison) {
         this.poisonTime += poison;
     }
 
     // funkcja zadajaca obrazenia z zatrucia
-    public void GetPoisonDamage() {
+    public void getPoisonDamage() {
         if (poisonTime > 0) {
             hp -= 5;
             poisonTime -= 1;
@@ -203,12 +202,12 @@ public class Player {
     }
 
     //funkcja dodaje czas trwania kwawienia
-    public void AddBleedingTime(int bleeding) {
+    public void addBleedingTime(int bleeding) {
         this.bleedingTime += bleeding;
     }
 
     // funkcja zadajaca obrazenia z kwawienia
-    public void GetBleedingDamage() {
+    public void getBleedingDamage() {
         if (bleedingTime > 0) {
             hp -= 2;
             bleedingTime -= 1;
@@ -216,14 +215,14 @@ public class Player {
     }
 
     // funkcja pobierajaca dane o procencie szans na wystapienie zamrozenia
-    public void GetFreezing(double freez) {
+    public void getFreezing(double freez) {
         this.freezing += freez;
     }
-    public void FlameArmorUsed(boolean flameArmor){
+    public void flameArmorUsed(boolean flameArmor){
         flameArmorUsed = flameArmor;
     }
-    private void FlameArmorEffect(Card card){
-        if(card.GetCardType() == Card.cardType.Weapon && flameArmorUsed){
+    private void flameArmorEffect(Card card){
+        if(card.getCardType() == Card.cardType.Weapon && flameArmorUsed){
             AddBurnTime(8);
             flameArmorUsed = false;
         }
@@ -237,7 +236,7 @@ public class Player {
      * @param burn   jeśli prawda zdejmuje podpalenie
      * @param shield jeśli prawda dejmuje całą tarczę
      */
-    public void Purification(boolean poison, boolean bleed, boolean burn, boolean shield) {
+    public void purification(boolean poison, boolean bleed, boolean burn, boolean shield) {
         if (poison) {
             poisonTime = 0;
         } else if (bleed) {
@@ -251,15 +250,15 @@ public class Player {
     }
 
     // funkcja pozwala uruchomic funkcje dodajaca hp co ture
-    public void HealByTurn(boolean crownReady) {
+    public void healByTurn(boolean crownReady) {
         this.crownReady = true;
 
     }
     // metoda potrzebna do wypalenia
-    public void Burnout(boolean burnout){
+    public void burnout(boolean burnout){
         this.burnout = true;
     }
-    public void LetBurnout(Player player){
+    public void letBurnout(Player player){
         if(burnout){
             hp -= (burnTime*2);
             burnout = false;
@@ -267,16 +266,16 @@ public class Player {
     }
 
     //funkcje zadająca obrażenia takie jak poprzednio zadał przeciwnik; stworzone na rzecz dragon blood
-    public void SaveHp(Player player) {
+    public void saveHp(Player player) {
         lostHp = hp;
     }
 
-    public void Riposte(Player player) {
+    public void riposte(Player player) {
         hp -= lostHp;
         lostHp = 0;
     }
     // funkcja potrzebna do karty charon
-    public void Charon(boolean charonReady){
+    public void charon(boolean charonReady){
         if(hp <= 20){
             hp =0;
         }

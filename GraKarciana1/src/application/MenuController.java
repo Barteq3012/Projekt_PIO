@@ -8,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -17,9 +19,12 @@ public class MenuController {
 	Duel duel;
 
 
+
 	@FXML
     private Pane menuPane;
 
+	@FXML
+	private AnchorPane menuAnchor;
 
     @FXML
     void actionOfCampaignButton(ActionEvent event) {
@@ -43,8 +48,10 @@ public class MenuController {
     		tableStage.setAlwaysOnTop(false);
     		tableStage.setOpacity(1);
     		tableStage.setTitle("Pojedynek");
-
+			tableStage.getIcons().add(new Image("pictures/icon.png"));
+			System.out.println("Work");
 			duel.startDuel();
+
   
     	} catch (Exception e) {
     		System.err.println(e.getMessage());
@@ -55,20 +62,33 @@ public class MenuController {
 
     @FXML
     void actionOfHowToPlayButton(ActionEvent event) throws IOException {
-    	
+
+		AnchorPane howToPlay = FXMLLoader.load(getClass().getResource("/design/howtoplay.fxml"));
+		menuAnchor.getChildren().setAll(howToPlay);
+
+/* stare
     	menuPane = FXMLLoader.load(getClass().getResource("/design/howtoplay.fxml")); //wczytywanie pliku fxml
 		Scene scene = new Scene(menuPane,700,500);
 		
 		Main.primaryStage2.setScene(scene);
+
+
+ */
+
     }
 
     @FXML
     void actionOfAuthorsButton() throws IOException {
-   
+
+		AnchorPane author = FXMLLoader.load(getClass().getResource("/design/authors.fxml"));
+		menuAnchor.getChildren().setAll(author);
+   /* stare
     	menuPane = FXMLLoader.load(getClass().getResource("/design/authors.fxml")); //wczytywanie pliku fxml
 		Scene scene = new Scene(menuPane,700,500);
 
 		Main.primaryStage2.setScene(scene);
+
+    */
     }
     
     @FXML

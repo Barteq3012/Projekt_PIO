@@ -1,22 +1,23 @@
 package application;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.event.ActionEvent;
+
+import java.io.IOException;
 
 public class TableController {
 
+//    public static String playerNameOf;
+    private Pane tablePane;
 
-    @FXML
-    private Button takeHpOpponent;
-
-    @FXML
-    private Button takeSdOpponent;
-
-    @FXML
-    private Button killCardsPlayer;
 
     @FXML
     private Button surrender;
@@ -33,8 +34,6 @@ public class TableController {
     @FXML
     private  Text spCounterPlayer;
 
-    @FXML
-    private Text playerName;
 
     @FXML
     private Text opponentName;
@@ -51,18 +50,50 @@ public class TableController {
     @FXML
     private ImageView playerStackOfCards;
 
+
+
+
     @FXML
-    private void initialize () {
+    void initialize() {
+
+
+//        playerName.setText(playerNameOf);
 
 
     }
 
+
+
     @FXML
-    private void surrenderClose() {
-        // get a handle to the stage
-        Stage stage = (Stage) surrender.getScene().getWindow();
-        // do what you have to do
-        stage.close();
+    private void surrenderClose(ActionEvent event) {
+
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Scoreboard.fxml"));
+            Pane scoreboard =  fxmlLoader.load();
+
+
+            Stage scoreStage = new Stage();
+            scoreStage.setScene(new Scene(scoreboard));
+            scoreStage.show();
+            scoreStage.setAlwaysOnTop(false);
+            scoreStage.setOpacity(1);
+            scoreStage.setTitle("Wynik");
+            scoreStage.getIcons().add(new Image("pictures/icon.png"));
+            System.out.println("Wynik");
+
+
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+
+
     }
+
+
+
+
 
 }

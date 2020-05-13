@@ -1,11 +1,11 @@
 package application;
-	
+
 import javafx.application.Application;
-import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
 
 public class Main extends Application {
 	
@@ -27,8 +27,6 @@ public class Main extends Application {
 			primaryStage.setResizable(false); // nie zmieniamy rozmiaru okna
 			primaryStage.show();
     		primaryStage.getIcons().add(new Image("pictures/icon.png"));
-    	
-    		primaryStage2 = primaryStage;
 
 		} catch(Exception e) {
 			e.printStackTrace();
