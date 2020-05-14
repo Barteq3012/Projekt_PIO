@@ -21,21 +21,29 @@ public class DeckOfCards {
 
         for(int i = 0 ; i < AllCard.allCard.size(); i++) {
 
-            int randomCardId = generator.nextInt(AllCard.allCard.size());
+            supDraw();
+        }
+    }
 
-            Card drawCard = AllCard.getCard(randomCardId);
+    private void supDraw(){
 
-            if(drawCard.alreadyRandToDeck) {
+        int randomCardId = generator.nextInt(AllCard.allCard.size());
+        Card drawCard = AllCard.getCard(randomCardId);
 
-                Card newCard = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
-                        drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
+        if(drawCard.alreadyRandToDeck && drawCard.getValue() == 1) {
 
-                deck.add(newCard);
-            }
-            else {
-                drawCard.alreadyRandToDeck = true;
-                deck.add(drawCard);
-            }
+            Card newCard = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
+                    drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
+
+            deck.add(newCard);
+        }
+        else if (!drawCard.alreadyRandToDeck){
+
+            deck.add(drawCard);
+            drawCard.alreadyRandToDeck = true;
+        }
+        else {
+            supDraw();
         }
     }
 

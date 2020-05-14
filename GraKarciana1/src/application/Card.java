@@ -29,10 +29,6 @@ public class Card {
     public enum cardType {Fire, Water, Ice, Weapon, Action, Counter, Potion, Magic}
     private final cardType type;
 
-    //dodatkowe efekty kart
-    private final int burn = 6;  // czas nadany przez jedna karte podpalenia
-    private final int poisone = 4;   // czas na jaki jedna karta nałoży trucizne
-    private final int bleed = 8;   // czas na jaki karta nalozy krwawienie
     private int freez; // uwarunkuje zamroznie; liczby od 0 do 100;
     private boolean flameArmor;  //specjalna zmienna dla plomiennej zbroi
 
@@ -79,7 +75,6 @@ public class Card {
                 owner.setNiceCards(); // jesli karta na stole to po zjechaniu układa ładnie karty
             }
 
-
             imageView.setSmooth(false);
             imageView.setScaleX(1);
             imageView.setScaleY(1);
@@ -98,19 +93,22 @@ public class Card {
     funkcja służąca do określenia dodatkowych funkcji karty w zależności od jej typu
      */
     public void action(Player player, Player enemy) {
+
         takeDamage(enemy);
         giveArmor(player);
         giveHp(player);
+
         switch (type) {
             case Fire: {
                 switch (name) {
                     case "FireBall" -> ignite(enemy);
-                    case "Flame Armor" -> flameArmor(enemy);  // nakłada podpalenie jesli przeciwnik uzyje karty broni
+                    case "Flame Armor" -> enemy.flameArmorUsed(true);  // nakłada podpalenie jesli przeciwnik uzyje karty broni
                     case "Promethean fire" -> ignite(enemy);
                 }
                 break;
             }
             case Ice: {
+
                 if (value == 1) {
                      freez = 25;
                     freezing(enemy);
@@ -124,10 +122,10 @@ public class Card {
                     freezing(enemy);
                     //szanse na zamrozenie w 80%
                 }
-
                 break;
             }
             case Magic: {
+
                 if (name.equals("Joker")) {
                     // wywołuje wybraną kartę ze stołu; wcześniej rzuconą przez nas karte
                 }else if (name.equals("Medusa Look")){
@@ -139,12 +137,16 @@ public class Card {
                     player.healByTurn(true);
                     // dodaje 2hp co ture
                 }else if (name.equals("Burnout")){
-                    player.burnout(true);
+                    enemy.letBurnout();
                     //zadaje obrazenia z podpalenia i nie zdejmuje go
                 }else if (name.equals("Charon")){
-                    charonReady(enemy);
+                    enemy.charon();
                     // zabija przeciwnika jeśli ma 20 i mniej hp, nie uwzglednia tarczy
+                } else if (name.equals("Time of life and death")){
+                    enemy.dealDamage(enemy.cardInHand.getSize());
+                    player.increaseHp(player.cardInHand.getSize());
                 }
+
                 break;
             }
             case Action: {
@@ -152,7 +154,7 @@ public class Card {
             }
             case Water: {
                 switch (name) {
-                    case "Tsunami" -> player.purification(false, false, false, true);
+                    case "Tsunami" -> enemy.purification(false, false, false, true);
                     case "Fog" -> {
                          freez = 50;
                         freezing(enemy);  // przeciwnik ma 50% wywołanie efektu karty
@@ -167,29 +169,23 @@ public class Card {
                     case "Bow" -> player.cardInHand.DrawArrowCards();  //dobierane sa do reki dwie karty Arrow
                     case "Mace" -> bleeding(enemy);
                     case "Dragon Killer" -> player.purification(false, false, true, false);
+                    case "Axe" -> player.dealDamage(5);
                 }
                 break;
             }
             case Potion: {
-                takeDamage(enemy);
-                giveArmor(player);
-                giveHp(player);
                 switch (name) {
                     case "Potion of Poison" -> poison(enemy);
-                    case "Dragon Blood" -> player.saveHp(player);
+                    case "Dragon Blood" -> player.riposte();
                     case "Tulip" -> bleeding(enemy);
                 }
-
                 break;
             }
             default:
                 break;
 
         }
-
-
     }
-
 
     //kolejne metody określające dodatkowe umiejetności kart
 
@@ -209,36 +205,29 @@ public class Card {
     }
 
     // podanie dlugosci podpalenia
-    private void ignite(Player player) {
-        player.AddBurnTime(burn);
+    private void ignite(Player enemy) {
+
+        int burnTime = 6; // czas nadany przez jedna karte podpalenia
+        enemy.addBurnTime(burnTime);
     }
 
     //podanie dlugosci zatrucia
-    private void poison(Player player) {
-        player.addPoisonTime(poisone);
-    }
+    private void poison(Player enemy) {
 
-    public cardType getCardType(){
-        return type;
+        int poisone = 4; // czas na jaki jedna karta nałoży trucizne
+        enemy.addPoisonTime(poisone);
     }
 
     // podanie dlugosci krwaweinia
-    private void bleeding(Player player) {
-        player.addBleedingTime(bleed);
+    private void bleeding(Player enemy) {
+
+        int bleed = 8; // czas na jaki karta nalozy krwawienie
+        enemy.addBleedingTime(bleed);
     }
 
     // podanie szans na zamrozenie
-    private void freezing(Player player) {
-        player.getFreezing(freez);
-    }
-
-    // funkcja potrzebna do karty charona
-    private void charonReady(Player player){
-        player.charon(true);
-    }
-
-    private void flameArmor(Player player){
-        player.flameArmorUsed(true);
+    private void freezing(Player enemy) {
+        enemy.getFreezing(freez);
     }
 
     private void setChosen() {
@@ -281,6 +270,10 @@ public class Card {
 
     public int getHpIncrease() {
         return hpIncrease;
+    }
+
+    public cardType getCardType(){
+        return type;
     }
 }
 

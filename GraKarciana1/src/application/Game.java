@@ -50,8 +50,6 @@ public class Game {
     Text textOpponentStack = new Text();
     ImageView imgOpponentCardStack = new ImageView();
 
-
-
     public String playerName = "Bartek";
     public String opponentName = "Kartek";
 
@@ -67,11 +65,11 @@ public class Game {
 
         this.table = table;
 
-        playerCardInHand = new CardInHand(180, 540, table);
-        enemyCardInHand = new CardInHand(180, -150, table);
+        playerCardInHand = new CardInHand(140, 530, table);
+        enemyCardInHand = new CardInHand(140, -150, table);
 
-        player = new Player(playerName, 200, 10, playerCardInHand);
-        enemy = new Player(opponentName, 200, 10, enemyCardInHand);
+        player = new Player(playerName, 150, 10, playerCardInHand);
+        enemy = new Player(opponentName, 150, 10, enemyCardInHand);
     }
 
 
@@ -93,7 +91,7 @@ public class Game {
         startOpponentStack();
         startOpponentNumberOfStack();
 
-        //dopiera początkowe karty, po zakońćzeniu animacji game ustawia na ready
+        //dobiera początkowe karty, po zakońćzeniu animacji game ustawia na ready
         playerCardInHand.initHand(playerSmallDeck);
         enemyCardInHand.initHand(enemySmallDeck);
 
@@ -159,73 +157,27 @@ public class Game {
 
         //akcja animacja
         player.moveCard(1);
-        player.throwCard();
-        textPlayerHp.setText(String.valueOf(player.hp));
-        textPlayerSp.setText(String.valueOf(player.sp));
-        textOpponentSp.setText(String.valueOf(enemy.sp));
-        textOpponentHp.setText(String.valueOf(enemy.hp));
-        System.out.println("Po akcji gracza:");
-        System.out.println("Gracz: hp: " + player.hp + " sp: " + player.sp);
-        System.out.println("wróg: hp: " + enemy.hp + " sp: " + enemy.sp);
-        checkEnd();
 
-        if (!isEnd && enemyCardInHand.emptyHand()) {
-            //sprawdza rozmiar małych talii(0-15)
-            playerSmallDeck.setSize();
-            enemySmallDeck.setSize();
-
-            //jeśli są jeszcze karty, to dobrać po jednej karcie, jak nie sprawdź, czy koniec gry
-            if (playerSmallDeck.getSize() > 0 || enemySmallDeck.getSize() > 0) {
-                drawCards();
-            } else {
-                checkNewTurn();
-            }
-        }
-    }
-
-    private void throwCardByEnemy() {
-
-        // task do czekania na wykonanie animacji rzucenia karty gracza
         Task<Void> sleeper = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 try {
-                    Thread.sleep(1200);
+                    Thread.sleep(1100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 return null;
             }
         };
-        // po czekaniu
         sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
 
-                enemy.card = enemyCardInHand.getCardFromEnemyHand(); //losuje kartę z ręki, dalej to samo, co u gracza
-                enemy.cardsOntable.add(enemy.card);
-
-                enemy.card.owner = enemy;
-                enemy.card.onTable = true;
-
-                enemyCardInHand.inHandPosition[enemy.card.positionOnTable] = 0;
-                enemy.card.positionOnTable = 0;
-
-                enemy.moveCard(2);
-                enemy.throwCard();
-
-                textPlayerHp.setText(String.valueOf(player.hp));
-                textPlayerSp.setText(String.valueOf(player.sp));
-                textOpponentSp.setText(String.valueOf(enemy.sp));
-                textOpponentHp.setText(String.valueOf(enemy.hp));
-
-
-                System.out.println("Po akcji wroga:");
-                System.out.println("Gracz: hp" + player.hp + " sp: " + player.sp);
-                System.out.println("wróg: hp " + enemy.hp + " sp: " + enemy.sp);
+                player.throwCard();
+                setPoints();
                 checkEnd();
 
-                if (!isEnd) {
+                if (!isEnd && enemyCardInHand.emptyHand()) {
                     //sprawdza rozmiar małych talii(0-15)
                     playerSmallDeck.setSize();
                     enemySmallDeck.setSize();
@@ -242,6 +194,79 @@ public class Game {
         new Thread(sleeper).start();
     }
 
+    private void throwCardByEnemy() {
+
+        // task do czekania na wykonanie animacji rzucenia karty gracza
+        Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        // po czekaniu
+        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+
+                enemy.checkEffects();
+                setPoints();
+                checkEnd();
+
+                enemy.card = enemyCardInHand.getCardFromEnemyHand(player.hp, player.sp, enemy.hp, enemy.sp); //losuje kartę z ręki, dalej to samo, co u gracza
+                enemy.cardsOntable.add(enemy.card);
+
+                enemy.card.owner = enemy;
+                enemy.card.onTable = true;
+
+                enemyCardInHand.inHandPosition[enemy.card.positionOnTable] = 0;
+                enemy.card.positionOnTable = 0;
+
+                enemy.moveCard(2);
+
+                Task<Void> sleeper = new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        try {
+                            Thread.sleep(1100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+                };
+                sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                    @Override
+                    public void handle(WorkerStateEvent event) {
+
+                        enemy.throwCard();
+                        setPoints();
+                        checkEnd();
+
+                        if (!isEnd) {
+                            //sprawdza rozmiar małych talii(0-15)
+                            playerSmallDeck.setSize();
+                            enemySmallDeck.setSize();
+
+                            //jeśli są jeszcze karty, to dobrać po jednej karcie, jak nie sprawdź, czy koniec gry
+                            if (playerSmallDeck.getSize() > 0 || enemySmallDeck.getSize() > 0) {
+                                drawCards();
+                            } else {
+                                checkNewTurn();
+                            }
+                        }
+                    }
+                });
+                new Thread(sleeper).start();
+            }
+        });
+        new Thread(sleeper).start();
+    }
+
     private void drawCards() {
 
         // task do czekania na wykonanie animacji rzucenia karty wroga
@@ -249,7 +274,7 @@ public class Game {
             @Override
             protected Void call() throws Exception {
                 try {
-                    Thread.sleep(1200);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -285,7 +310,7 @@ public class Game {
             @Override
             protected Void call() throws Exception {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -323,10 +348,31 @@ public class Game {
                     textAnimation();
 
                     if (playerCardInHand.emptyHand()) {
-                        nextTurn();
+
+                        player.checkEffects();
+                        setPoints();
+                        checkEnd();
+                        if(!isEnd) {
+                            nextTurn();
+                        }
+                    }
+                    else if(!playerCardInHand.emptyHand() && enemyCardInHand.emptyHand()) {
+
+                        enemy.checkEffects();
+                        player.checkEffects();
+                        setPoints();
+                        checkEnd();
+                        if(!isEnd) {
+                            Game.ready = true;
+                        }
                     }
                     else {
-                        Game.ready = true;
+                        player.checkEffects();
+                        setPoints();
+                        checkEnd();
+                        if(!isEnd) {
+                            Game.ready = true;
+                        }
                     }
                 }
             }
@@ -390,12 +436,13 @@ public class Game {
         ft.play();
     }
 
-    public void setTable(Pane table) {
+   public void setPoints() {
 
-        this.table = table;
-
-
-    }
+       textPlayerHp.setText(String.valueOf(player.hp));
+       textPlayerSp.setText(String.valueOf(player.sp));
+       textOpponentSp.setText(String.valueOf(enemy.sp));
+       textOpponentHp.setText(String.valueOf(enemy.hp));
+   }
 
     private void startPlayerName()
     {

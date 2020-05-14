@@ -29,6 +29,8 @@ public class CardInHand {
 
     private int size = 0;
 
+    Card drawCard;
+
 
     public CardInHand(int handPositionX, int handPositionY, Pane table) {
 
@@ -67,9 +69,9 @@ public class CardInHand {
         return cardToThrow;
     }
 
-    public Card getCardFromEnemyHand() {
+    public Card getCardFromEnemyHand(int playerHp, int playerSp, int enemyHp, int enemySp) {
 
-        setSize();
+       /* setSize();
 
         int randomCardId = generator.nextInt(size);
 
@@ -77,7 +79,62 @@ public class CardInHand {
 
         cardsInHand.remove(drawCard);
 
-        return drawCard;
+        return drawCard;*/
+
+        supDraw(playerHp,playerSp,enemyHp,enemySp);
+
+        cardsInHand.remove(drawCard);
+
+        return  drawCard;
+
+    }
+
+    private void supDraw( int playerHp, int playerSp, int enemyHp, int enemySp) {
+
+        int playerVitality = playerHp + playerSp;
+        int enemyVitality = enemyHp + enemySp;
+
+        int randomCardId = generator.nextInt(cardsInHand.size());
+        drawCard = cardsInHand.get(randomCardId);
+
+        int weakCardsNumber = 0 ;
+        int mediumCardsNumber = 0;
+        int goodCardsNumber = 0;
+
+        for(Card card: cardsInHand){
+
+            if(card.getValue() == 1) {
+                weakCardsNumber++;
+            }
+            if(card.getValue() == 2) {
+                mediumCardsNumber++;
+            }
+            if(card.getValue() == 3) {
+                goodCardsNumber++;
+            }
+        }
+
+        if((enemyVitality > playerVitality + 20) && weakCardsNumber != 0) {
+
+            if(drawCard.getValue() != 1) {
+                supDraw( playerHp,playerSp,enemyHp,enemySp);
+            }
+        }
+
+        if((enemyVitality <= playerVitality + 20) && (enemyVitality > playerVitality - 20)  && mediumCardsNumber != 0) {
+
+            if(drawCard.getValue() != 2) {
+                supDraw( playerHp,playerSp,enemyHp,enemySp);
+            }
+        }
+
+        if((enemyVitality < playerVitality - 20) && goodCardsNumber != 0) {
+
+            if(drawCard.getValue() != 3) {
+                supDraw( playerHp,playerSp,enemyHp,enemySp);
+            }
+        }
+
     }
 
     public void drawCardsFromSmallDeck(SmallDeckOfCards smallDeck) {
@@ -98,7 +155,7 @@ public class CardInHand {
 
     public void DrawArrowCards(){
 
-        Card drawCard = AllCard.getCard(12);
+        Card drawCard = AllCard.summonCard.get(0);
 
         Card newCard1 = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
                 drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
@@ -187,6 +244,6 @@ public class CardInHand {
 
     public int getSize() {
 
-        return size;
+        return cardsInHand.size();
     }
 }
