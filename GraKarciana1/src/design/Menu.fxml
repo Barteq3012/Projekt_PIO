@@ -3,17 +3,32 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="menuAnchor" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MenuController">
+<AnchorPane fx:id="menuAnchor" minHeight="700.0" minWidth="1280.0" prefHeight="700.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MenuController">
    <children>
-      <Pane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="bodybg" stylesheets="@Menu.css">
+      <Pane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="687.0" minWidth="1247.0" prefHeight="700.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@Menu.css">
          <children>
-            <Button fx:id="campaign" layoutX="276.0" layoutY="220.0" mnemonicParsing="false" onAction="#actionOfCampaignButton" prefHeight="30.0" prefWidth="150.0" text="Kampania" />
-            <Button layoutX="276.0" layoutY="253.0" mnemonicParsing="false" onAction="#actionOfDuelButton" prefHeight="30.0" prefWidth="150.0" text="Pojedynek" />
-            <Button fx:id="howtoplay" layoutX="275.0" layoutY="286.0" mnemonicParsing="false" onAction="#actionOfHowToPlayButton" prefHeight="30.0" prefWidth="150.0" text="Jak grać?" />
-            <Button fx:id="authors" layoutX="275.0" layoutY="319.0" mnemonicParsing="false" onAction="#actionOfAuthorsButton" prefHeight="30.0" prefWidth="150.0" text="Autorzy" />
-            <Button fx:id="exit" layoutX="276.0" layoutY="352.0" mnemonicParsing="false" onAction="#actionOfExitButton" prefHeight="30.0" prefWidth="150.0" text="Wyjdź" />
+            <Button fx:id="campaign" layoutX="540.0" layoutY="310.0" mnemonicParsing="false" onAction="#actionOfCampaignButton" prefHeight="40.0" prefWidth="200.0" text="Kampania">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
+            <Button layoutX="540.0" layoutY="372.0" mnemonicParsing="false" onAction="#actionOfDuelButton" prefHeight="40.0" prefWidth="200.0" text="Pojedynek">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
+            <Button fx:id="howtoplay" layoutX="540.0" layoutY="432.0" mnemonicParsing="false" onAction="#actionOfHowToPlayButton" prefHeight="40.0" prefWidth="200.0" text="Jak grać?">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
+            <Button fx:id="authors" layoutX="540.0" layoutY="492.0" mnemonicParsing="false" onAction="#actionOfAuthorsButton" prefHeight="40.0" prefWidth="200.0" text="Autorzy">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
+            <Button fx:id="exit" layoutX="540.0" layoutY="548.0" mnemonicParsing="false" onAction="#actionOfExitButton" prefHeight="40.0" prefWidth="200.0" text="Wyjdź">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
          </children>
       </Pane>
    </children>

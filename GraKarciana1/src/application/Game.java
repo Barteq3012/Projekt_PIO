@@ -16,12 +16,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
+import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.IOException;
 
 public class Game {
 
@@ -36,6 +35,7 @@ public class Game {
     public Player enemy;
 
     Button scores = new Button("Wyniki");
+    Button pass = new Button("Poddaj się");
     Image imgCardStack = new Image("/pictures/cardBack.jpg");
 
     Text textPlayerName = new Text();
@@ -78,7 +78,6 @@ public class Game {
         // przypisuje wskazniki; gracz ma namiar na swojego przciwnika i na odwrot
         player.setMyEnemy(enemy);
         enemy.setMyEnemy(player);
-
         startPlayerName();
         startPlayerHp();
         startPlayerSp();
@@ -90,6 +89,22 @@ public class Game {
         startOpponentSp();
         startOpponentStack();
         startOpponentNumberOfStack();
+        passButton();
+        pass.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Pass.fxml"));
+                    Pane passboard =  fxmlLoader.load();
+                    table.getChildren().setAll(passboard);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
         //dobiera początkowe karty, po zakońćzeniu animacji game ustawia na ready
         playerCardInHand.initHand(playerSmallDeck);
@@ -573,6 +588,18 @@ public class Game {
         table.getChildren().add(scores);
     }
 
+    void passButton()
+    {
+        pass.setLayoutX(537.0);
+        pass.setLayoutY(331.0);
+        pass.setMnemonicParsing(false);
+        pass.setPrefHeight(39.0);
+        pass.setPrefWidth(206.0);
+        pass.getStylesheets().add("/design/button.css");
+
+        table.getChildren().add(pass);
+    }
+
     void win() {
 
 
@@ -601,16 +628,18 @@ public class Game {
             scorePlayer.setEffect(ds);
             scorePlayer.setText(String.valueOf(player.hp));
             scorePlayer.setFill(Color.WHITE);
-            scorePlayer.setX(80);
-            scorePlayer.setY(380);
+            scorePlayer.setX(160);
+            scorePlayer.setY(420);
+            scorePlayer.setTextAlignment(TextAlignment.CENTER);
             scorePlayer.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, 80));
 
             scoreOpponent.setEffect(ds);
             scoreOpponent.setText(String.valueOf(enemy.hp));
             scoreOpponent.setFill(Color.WHITE);
             scoreOpponent.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, 80));
-            scoreOpponent.setX(460);
-            scoreOpponent.setY(380);
+            scoreOpponent.setX(960);
+            scoreOpponent.setY(420);
+            scoreOpponent.setTextAlignment(TextAlignment.CENTER);
 
             winPane.getChildren().addAll(scorePlayer);
             winPane.getChildren().addAll(scoreOpponent);
@@ -648,16 +677,18 @@ public class Game {
             scorePlayer.setEffect(ds);
             scorePlayer.setText(String.valueOf(player.hp));
             scorePlayer.setFill(Color.WHITE);
-            scorePlayer.setX(80);
-            scorePlayer.setY(380);
+            scorePlayer.setX(160);
+            scorePlayer.setY(420);
+            scorePlayer.setTextAlignment(TextAlignment.CENTER);
             scorePlayer.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, 80));
 
             scoreOpponent.setEffect(ds);
             scoreOpponent.setText(String.valueOf(enemy.hp));
             scoreOpponent.setFill(Color.WHITE);
             scoreOpponent.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, 80));
-            scoreOpponent.setX(460);
-            scoreOpponent.setY(380);
+            scoreOpponent.setX(960);
+            scoreOpponent.setY(420);
+            scoreOpponent.setTextAlignment(TextAlignment.CENTER);
 
             losePane.getChildren().addAll(scorePlayer);
             losePane.getChildren().addAll(scoreOpponent);

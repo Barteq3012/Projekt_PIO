@@ -77,6 +77,7 @@ public class TableController {
             scoreStage.setAlwaysOnTop(false);
             scoreStage.setOpacity(1);
             scoreStage.setTitle("Wynik");
+
             scoreStage.getIcons().add(new Image("pictures/icon.png"));
             System.out.println("Wynik");
 
@@ -85,7 +86,7 @@ public class TableController {
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+       ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
 
 
     }

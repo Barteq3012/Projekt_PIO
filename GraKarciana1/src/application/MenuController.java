@@ -39,24 +39,31 @@ public class MenuController {
     		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Table.fxml"));
     		Pane tableRoot =  fxmlLoader.load();
 
-			duel = new Duel(tableRoot);
+			duel = new Duel(tableRoot); //
 			//duel.game.setTable(tableRoot);
 
-    		Stage tableStage = new Stage();
+    		/*Stage tableStage = new Stage();
     		tableStage.setScene(new Scene(tableRoot));
     		tableStage.show();
     		tableStage.setAlwaysOnTop(false);
     		tableStage.setOpacity(1);
     		tableStage.setTitle("Pojedynek");
 			tableStage.getIcons().add(new Image("pictures/icon.png"));
+
+    		 */
+    		menuPane.getChildren().setAll(tableRoot); //wczesniej bylo bez tego
 			System.out.println("Work");
+
+
+
+
 			duel.startDuel();
 
   
     	} catch (Exception e) {
     		System.err.println(e.getMessage());
     	}
-    	((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+//    	((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     	
     }
 

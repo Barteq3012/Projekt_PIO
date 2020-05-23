@@ -18,7 +18,7 @@ public class Main extends Application {
 		try {
 			
 			Pane rootPane = (Pane)FXMLLoader.load(getClass().getResource("/design/Menu.fxml")); //wczytywanie pliku fxml
-			Scene scene = new Scene(rootPane,700,500);
+			Scene scene = new Scene(rootPane,1280,700);
 			
 			scene.getStylesheets().add(getClass().getResource("/design/Menu.css").toExternalForm());
 			primaryStage.setScene(scene);
