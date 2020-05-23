@@ -55,7 +55,7 @@ public class Game {
 
  //  public TableController tableControl;
 
-    private Pane table;
+    public static Pane table;
 
     public static boolean ready = false;
     private boolean isEnd = false;

@@ -12,6 +12,10 @@ public class DeckOfCards {
 
     private int size = 0;
 
+    int numberOfWeakcards = 0;
+    int numberOfMediumcards = 0;
+    int numberOfGoodCards = 0;
+
     public DeckOfCards() {
 
         setDeck();
@@ -19,31 +23,100 @@ public class DeckOfCards {
 
     public void setDeck() {
 
-        for(int i = 0 ; i < AllCard.allCard.size(); i++) {
+        for(int i = 0 ; i < 29; i++) {
 
-            supDraw();
+            Card drawCard = AllCard.getCard(i);
+
+            Card copyCard = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
+                    drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
+
+            deck.add(copyCard);
         }
     }
 
     private void supDraw(){
 
-        int randomCardId = generator.nextInt(AllCard.allCard.size());
-        Card drawCard = AllCard.getCard(randomCardId);
+        if(numberOfWeakcards <= 8) {
 
-        if(drawCard.alreadyRandToDeck && drawCard.getValue() == 1) {
+            int randomCardId = generator.nextInt(9);
+            Card drawCard = AllCard.getCard(randomCardId);
 
-            Card newCard = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
-                    drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
+            if (!drawCard.alreadyRandToDeck){
 
-            deck.add(newCard);
+                deck.add(drawCard);
+                drawCard.alreadyRandToDeck = true;
+
+                drawCard.repeated++;
+                numberOfWeakcards ++;
+            }
+            else if (drawCard.repeated <= 2){
+
+                Card newCard = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
+                        drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
+
+                deck.add(newCard);
+
+                drawCard.repeated++;
+                numberOfWeakcards ++;
+            }
+            else {
+                supDraw();
+            }
+
         }
-        else if (!drawCard.alreadyRandToDeck){
+        else if(numberOfMediumcards <= 7) {
 
-            deck.add(drawCard);
-            drawCard.alreadyRandToDeck = true;
+            int randomCardId = generator.nextInt(10) + 9;
+            Card drawCard = AllCard.getCard(randomCardId);
+
+            if (!drawCard.alreadyRandToDeck){
+
+                deck.add(drawCard);
+                drawCard.alreadyRandToDeck = true;
+
+                numberOfMediumcards ++;
+                drawCard.repeated++;
+            }
+            else if (drawCard.repeated <= 2){
+
+                Card newCard = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
+                        drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
+
+                deck.add(newCard);
+
+                numberOfMediumcards ++;
+                drawCard.repeated++;
+            }
+            else {
+                supDraw();
+            }
         }
-        else {
-            supDraw();
+        else if(numberOfGoodCards <= 5) {
+
+            int randomCardId = generator.nextInt(7) + 19;
+            Card drawCard = AllCard.getCard(randomCardId);
+
+            if (!drawCard.alreadyRandToDeck){
+
+                deck.add(drawCard);
+                drawCard.alreadyRandToDeck = true;
+
+                numberOfGoodCards ++;
+                drawCard.repeated++;
+            }
+            else if (drawCard.repeated <= 2){
+
+                Card newCard = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
+                        drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
+
+                deck.add(newCard);
+
+                numberOfGoodCards++;
+                drawCard.repeated++;
+            }
+            else {
+                supDraw();
+            }
         }
     }
 

@@ -3,6 +3,8 @@ package application;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.Random;
+
 public class Card {
 
     // podstawowe informacje do karty
@@ -22,6 +24,8 @@ public class Card {
     public boolean onTable = false;
     public int positionOnTable = 0;
     public double absolutePosition;
+    public int repeated = 0;
+    public Image image;
 
     public boolean alreadyRandToDeck = false;
     public boolean alreadyRandToSmallDeck = false;
@@ -55,7 +59,7 @@ public class Card {
         this.value = value;
         this.imageName = imageName;
 
-        Image image = new Image(getClass().getResourceAsStream(imageName));
+        image = new Image(getClass().getResourceAsStream(imageName));
         imageView = new ImageView(image);
 
         imageView.setOnMouseEntered(e -> {
@@ -103,33 +107,51 @@ public class Card {
                 switch (name) {
                     case "FireBall" -> ignite(enemy);
                     case "Flame Armor" -> enemy.flameArmorUsed(true);  // nakłada podpalenie jesli przeciwnik uzyje karty broni
-                    case "Promethean fire" -> ignite(enemy);
                 }
                 break;
             }
             case Ice: {
 
                 if (value == 1) {
-                     freez = 25;
-                    freezing(enemy);
+
                     // szanse na zamrozenie w 25%
+                    enemy.setFreezing(25);
+
                 } else if (value == 2) {
-                     freez = 30;
-                    freezing(enemy);
+
                     // szanse na zamrozenie w 30%
+                    enemy.setFreezing(30);
+
                 } else if (value == 3) {
-                     freez = 80;
-                    freezing(enemy);
+
                     //szanse na zamrozenie w 80%
+                    enemy.setFreezing(80);
                 }
                 break;
             }
             case Magic: {
 
                 if (name.equals("Joker")) {
-                    // wywołuje wybraną kartę ze stołu; wcześniej rzuconą przez nas karte
+                    // zamienia się w losową kartę ze stołu; wcześniej rzuconą przez nas karte
+
+                    Random random = new Random();
+
+                    if(player.cardsOntable.size() > 1) {
+
+                        int randomNumber = random.nextInt(player.cardsOntable.size());
+
+                        Card randCard = player.cardsOntable.get(randomNumber);
+
+                        //player.card.imageView = new ImageView(randCard.image);
+                        player.card.imageView.setImage(randCard.image);
+                        randCard.action(player, enemy);
+                    }
+
                 }else if (name.equals("Medusa Look")){
+
                     // zabrania wywołac karte dającą tarcze oraz karty leczace
+                    enemy.medusa = true;
+
                 }else if (name.equals("Summon Cerberus")){
                     bleeding(enemy);
                     poison(enemy);
@@ -140,11 +162,16 @@ public class Card {
                     enemy.letBurnout();
                     //zadaje obrazenia z podpalenia i nie zdejmuje go
                 }else if (name.equals("Charon")){
-                    enemy.charon();
+
                     // zabija przeciwnika jeśli ma 20 i mniej hp, nie uwzglednia tarczy
+                    enemy.charon();
+
                 } else if (name.equals("Time of life and death")){
                     enemy.dealDamage(enemy.cardInHand.getSize());
                     player.increaseHp(player.cardInHand.getSize());
+                } else if (name.equals("Anger of God")){
+
+                    enemy.setFreezing(50);
                 }
 
                 break;
@@ -170,6 +197,7 @@ public class Card {
                     case "Mace" -> bleeding(enemy);
                     case "Dragon Killer" -> player.purification(false, false, true, false);
                     case "Axe" -> player.dealDamage(5);
+                    case "Perseus shield" -> player.increaseSp((int) (player.hp * 0.1));
                 }
                 break;
             }
@@ -227,7 +255,7 @@ public class Card {
 
     // podanie szans na zamrozenie
     private void freezing(Player enemy) {
-        enemy.getFreezing(freez);
+        enemy.setFreezing(freez);
     }
 
     private void setChosen() {
