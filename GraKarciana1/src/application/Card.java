@@ -167,11 +167,15 @@ public class Card {
                 if (name.equals("Joker")) {
                     // zamienia się w losową kartę ze stołu; wcześniej rzuconą przez nas karte
 
+                    player.cardsOntable.remove(this);
+
                     Random random = new Random();
 
                     if(player.cardsOntable.size() > 0) {
 
                         int randomNumber = random.nextInt(player.cardsOntable.size());
+
+                        player.cardsOntable.add(this);
 
                         Card randCard = player.cardsOntable.get(randomNumber);
 

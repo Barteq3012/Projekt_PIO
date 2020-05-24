@@ -14,7 +14,7 @@ public class Duel{
     public Duel(Pane table) {
 
         this.table = table;
-        game = new Game(table, "Prometeusz", "Kartek", 80, 80, 10, 10);
+        game = new Game(table, "Promek", "Kartek", 80, 10, 80, 10);
     }
 
     public void startDuel() {
