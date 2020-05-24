@@ -35,10 +35,12 @@ public class Player {
     public int supPositionX = 60; // do obliczania pozycji po ściśnięciu kart
 
     // zmienne dotyczące efektów nakładanych przez karte i efektów czasowych
-    private int burnTime = 0;   // nadanie czasu trwania podpalenia
+    public int burnTime = 0;   // nadanie czasu trwania podpalenia
     private int poisonTime = 0;  // nadanie czasu trwania zatrucia
-    private int bleedingTime = 0;  // nadanie czasu trwania krawawienia
+    public int bleedingTime = 0;  // nadanie czasu trwania krawawienia
     private int freezing = 0; // zmienna warunkująca procent szans na wystąpienie efektu
+    private int immuneTime = 0;
+    public int effectsImmuneTime = 0;
 
     private Text burnTimeNumber = new Text();
     private Text poisonTimeNumber = new Text();
@@ -50,10 +52,12 @@ public class Player {
     private  boolean isStartBurn = false;
     private  boolean isStartPoison = false;
     private  boolean isStartBleeding = false;
+    private  boolean isDamaged = false;
 
     private boolean crownReady = false; // zmiena stworzonana rzecz korony smierci
     private boolean flameArmor = false; // potrzebne do flame Armor
     public boolean medusa = false;
+    public boolean hydraHead = false;
 
     public boolean actualCardData = false;
 
@@ -89,9 +93,11 @@ public class Player {
         freezing = 0; // wyzerowanie zmiennej odpowiedzialenj za brak uzycia akcji karty, uda się czy nie uda zamrożenie to i tak zeruj
 
         checkFlameArmorEffect();
+        checkHydraHead();
 
         actualCardData = true;
         myEnemy.actualCardData = false;
+        isDamaged = false;
     }
 
     // wywołanie wszystkich efektów czasowych
@@ -99,6 +105,14 @@ public class Player {
 
         if (crownReady) {
             hp += 2;
+        }
+
+        if(immuneTime > 0) {
+            immuneTime--;
+        }
+
+        if(effectsImmuneTime > 0) {
+            effectsImmuneTime--;
         }
 
         getBurnDamage();
@@ -133,35 +147,40 @@ public class Player {
 
         t.setOnFinished(e -> {
 
-            // przy 8 karty ścisnął się
-            if (cardsOntable.size() == 8) {
-
-                //pętla przesuwa wszytskie rzucone już karty z wyjątkiem pierwszej
-                for (Card card : cardsOntable) {
-
-                    if (cardsOntable.indexOf(card) != 0) {
-
-                        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), card.imageView);
-
-                        tt.setFromX(card.absolutePosition);
-                        tt.setToX(card.absolutePosition - supPositionX);
-                        tt.play();
-                        supPositionX += 60;
-                    }
-                }
-
-                positionX = positionX + 110 - supPositionX; // nowa pozycja po zagęszceniu
-
-            } else if (cardsOntable.size() > 8) {
-                //po zagęszczeniu co ile układać
-                positionX += 70;
-            } else {
-                //przed zagęszczeniem co ile układać
-                positionX += 110;
-            }
+            positioning();
 
             t.stop();
         });
+    }
+
+    private void positioning() {
+
+        // przy 8 karty ścisnął się
+        if (cardsOntable.size() == 8) {
+
+            //pętla przesuwa wszytskie rzucone już karty z wyjątkiem pierwszej
+            for (Card card : cardsOntable) {
+
+                if (cardsOntable.indexOf(card) != 0) {
+
+                    TranslateTransition tt = new TranslateTransition(Duration.millis(2000), card.imageView);
+
+                    tt.setFromX(card.absolutePosition);
+                    tt.setToX(card.absolutePosition - supPositionX);
+                    tt.play();
+                    supPositionX += 60;
+                }
+            }
+
+            positionX = positionX + 110 - supPositionX; // nowa pozycja po zagęszceniu
+
+        } else if (cardsOntable.size() > 8) {
+            //po zagęszczeniu co ile układać
+            positionX += 70;
+        } else {
+            //przed zagęszczeniem co ile układać
+            positionX += 110;
+        }
     }
 
     // metoda po kolei układa rzucone karty na wierzch
@@ -176,14 +195,21 @@ public class Player {
     // funkcja zadajaca obrazenia i odejmująca tarcze
     public void dealDamage(int damage) {
 
-        if (sp > 0) {
-            sp -= damage;
-            if (sp < 0) {
-                hp += sp;
-                sp = 0;
+        if(damage != 0) {
+            isDamaged = true;
+        }
+
+        if(immuneTime == 0) {
+
+            if (sp > 0) {
+                sp -= damage;
+                if (sp < 0) {
+                    hp += sp;
+                    sp = 0;
+                }
+            } else {
+                hp -= damage;
             }
-        } else {
-            hp -= damage;
         }
     }
 
@@ -195,6 +221,16 @@ public class Player {
     //funkcja dodajaca tarczy
     public void increaseSp(int spAmount) {
         sp += spAmount;
+    }
+
+    public void addImmuneTime(int addImmune) {
+
+        immuneTime += addImmune;
+    }
+
+    public void addEffectsImmuneTime(int addImmune) {
+
+        effectsImmuneTime += addImmune;
     }
 
     //funkcja dodaj czas trwania podpalenia
@@ -418,6 +454,36 @@ public class Player {
         }
 
         flameArmor = false;
+    }
+
+    private void checkHydraHead(){
+
+        if(hydraHead && myEnemy.isDamaged){
+
+            Card hydraHead = AllCard.allCard.get(43);
+
+            Card newCard = new Card(hydraHead.getName(),hydraHead.getId(), hydraHead.getValue(), hydraHead.getDamage(), hydraHead.getArmor(),
+                    hydraHead.getType(), hydraHead.getImageName(), hydraHead.getHpIncrease());
+
+            myEnemy.cardsOntable.add(newCard);
+
+            myEnemy.cardInHand.hand.getChildren().add(newCard.imageView);
+            newCard.imageView.fitWidthProperty().bind(myEnemy.cardInHand.hand.widthProperty());
+            newCard.imageView.setPreserveRatio(true);
+            newCard.imageView.setX(myEnemy.positionX);
+
+            if (myEnemy.name.equals("Bartek")) {
+                newCard.imageView.setY(-150);
+            } else {
+                newCard.imageView.setY(250);
+            }
+
+            newCard.action(myEnemy, this);
+
+            myEnemy.positioning();
+        }
+
+        hydraHead = false;
     }
 
     /**

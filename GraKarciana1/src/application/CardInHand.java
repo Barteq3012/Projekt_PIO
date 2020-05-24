@@ -153,7 +153,7 @@ public class CardInHand {
         }
     }
 
-    public void DrawArrowCards(){
+    public void drawArrowCards(){
 
         Card drawCard = AllCard.summonCard.get(0);
 
@@ -162,6 +162,37 @@ public class CardInHand {
 
         cardsInHand.add(newCard1);
         drawAnimation(newCard1);
+
+        Card newCard = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
+                drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
+
+        cardsInHand.add(newCard);
+        drawAnimation(newCard);
+    }
+
+    public void drawSweetness() {
+
+        Card drawCard = AllCard.summonCard.get(1);
+
+        Card newCard = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
+                drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
+
+        cardsInHand.add(newCard);
+        drawAnimation(newCard);
+    }
+
+    public void drawPain() {
+
+        Card drawCard = AllCard.summonCard.get(2);
+
+        Card newCard = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
+                drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
+
+        cardsInHand.add(newCard);
+        drawAnimation(newCard);
+    }
+
+    public void drawRandCard(Card drawCard) {
 
         Card newCard = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
                 drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
@@ -237,13 +268,12 @@ public class CardInHand {
         }
     }
 
-    public void setSize() {
-
-        size = cardsInHand.size();
-    }
-
     public int getSize() {
 
         return cardsInHand.size();
+    }
+
+    public List<Card> getCardsInHand() {
+        return cardsInHand;
     }
 }

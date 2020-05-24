@@ -90,6 +90,7 @@ public class Game {
         startOpponentStack();
         startOpponentNumberOfStack();
         passButton();
+
         pass.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -97,7 +98,10 @@ public class Game {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Pass.fxml"));
                     Pane passboard =  fxmlLoader.load();
-                    table.getChildren().setAll(passboard);
+                   // table.getChildren().setAll(passboard);
+                    Stage window = Main.primaryStage2;
+                    window.getScene().setRoot(passboard);
+                    window.show();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -232,51 +236,54 @@ public class Game {
                 setPoints();
                 checkEnd();
 
-                enemy.card = enemyCardInHand.getCardFromEnemyHand(player.hp, player.sp, enemy.hp, enemy.sp); //losuje kartę z ręki, dalej to samo, co u gracza
-                enemy.cardsOntable.add(enemy.card);
+                if(!isEnd) {
 
-                enemy.card.owner = enemy;
-                enemy.card.onTable = true;
+                    enemy.card = enemyCardInHand.getCardFromEnemyHand(player.hp, player.sp, enemy.hp, enemy.sp); //losuje kartę z ręki, dalej to samo, co u gracza
+                    enemy.cardsOntable.add(enemy.card);
 
-                enemyCardInHand.inHandPosition[enemy.card.positionOnTable] = 0;
-                enemy.card.positionOnTable = 0;
+                    enemy.card.owner = enemy;
+                    enemy.card.onTable = true;
 
-                enemy.moveCard(2);
+                    enemyCardInHand.inHandPosition[enemy.card.positionOnTable] = 0;
+                    enemy.card.positionOnTable = 0;
 
-                Task<Void> sleeper = new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        try {
-                            Thread.sleep(1100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                    enemy.moveCard(2);
+
+                    Task<Void> sleeper = new Task<Void>() {
+                        @Override
+                        protected Void call() throws Exception {
+                            try {
+                                Thread.sleep(1100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            return null;
                         }
-                        return null;
-                    }
-                };
-                sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-                    @Override
-                    public void handle(WorkerStateEvent event) {
+                    };
+                    sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                        @Override
+                        public void handle(WorkerStateEvent event) {
 
-                        enemy.throwCard();
-                        setPoints();
-                        checkEnd();
+                            enemy.throwCard();
+                            setPoints();
+                            checkEnd();
 
-                        if (!isEnd) {
-                            //sprawdza rozmiar małych talii(0-15)
-                            playerSmallDeck.setSize();
-                            enemySmallDeck.setSize();
+                            if (!isEnd) {
+                                //sprawdza rozmiar małych talii(0-15)
+                                playerSmallDeck.setSize();
+                                enemySmallDeck.setSize();
 
-                            //jeśli są jeszcze karty, to dobrać po jednej karcie, jak nie sprawdź, czy koniec gry
-                            if (playerSmallDeck.getSize() > 0 || enemySmallDeck.getSize() > 0) {
-                                drawCards();
-                            } else {
-                                checkNewTurn();
+                                //jeśli są jeszcze karty, to dobrać po jednej karcie, jak nie sprawdź, czy koniec gry
+                                if (playerSmallDeck.getSize() > 0 || enemySmallDeck.getSize() > 0) {
+                                    drawCards();
+                                } else {
+                                    checkNewTurn();
+                                }
                             }
                         }
-                    }
-                });
-                new Thread(sleeper).start();
+                    });
+                    new Thread(sleeper).start();
+                }
             }
         });
         new Thread(sleeper).start();

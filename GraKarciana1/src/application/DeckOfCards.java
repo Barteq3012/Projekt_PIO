@@ -23,7 +23,7 @@ public class DeckOfCards {
 
     public void setDeck() {
 
-        for(int i = 0 ; i < 29; i++) {
+        for(int i = 40 ; i < 61; i++) {
 
             Card drawCard = AllCard.getCard(i);
 

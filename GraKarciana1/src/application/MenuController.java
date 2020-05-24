@@ -51,11 +51,12 @@ public class MenuController {
 			tableStage.getIcons().add(new Image("pictures/icon.png"));
 
     		 */
-    		menuPane.getChildren().setAll(tableRoot); //wczesniej bylo bez tego
+    		//menuPane.getChildren().setAll(tableRoot); //wczesniej bylo bez tego
 			System.out.println("Work");
 
-
-
+			Stage window = Main.primaryStage2;
+			window.getScene().setRoot(tableRoot);
+			window.show();
 
 			duel.startDuel();
 

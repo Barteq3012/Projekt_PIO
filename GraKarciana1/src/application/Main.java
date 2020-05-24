@@ -21,12 +21,14 @@ public class Main extends Application {
 			Scene scene = new Scene(rootPane,1280,700);
 			
 			scene.getStylesheets().add(getClass().getResource("/design/Menu.css").toExternalForm());
+			//primaryStage = primaryStage2;
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Menu"); // tytul
 			primaryStage.setOpacity(1); //przezroczystosc 
 			primaryStage.setResizable(false); // nie zmieniamy rozmiaru okna
 			primaryStage.show();
     		primaryStage.getIcons().add(new Image("pictures/icon.png"));
+    		primaryStage2 = primaryStage;
 
 		} catch(Exception e) {
 			e.printStackTrace();

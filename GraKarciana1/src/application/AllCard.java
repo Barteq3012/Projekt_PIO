@@ -118,16 +118,124 @@ public class AllCard {
         allCard.add(angerOfGod);
 
 
+        // Helios (30-36) 7
 
-        // Zeus
+        Card spark = new Card("Spark",31,2,10,0, Card.cardType.Fire,"/pictures/iskry.png",0);
+        allCard.add(spark);
+
+        Card raysOfTheSun = new Card("Rays of the Sun",32,1,0,0, Card.cardType.Magic,"/pictures/promienie_slonca.png",0);
+        allCard.add(raysOfTheSun);
+
+        Card dazzle = new Card("Dazzle",33,2,0,0, Card.cardType.Magic,"/pictures/oslepienie.png",0);
+        allCard.add(dazzle);
+
+        Card sunSword = new Card("Sun sword",34,3,30,0, Card.cardType.Weapon,"/pictures/miecz_slonca.png",0);
+        allCard.add(sunSword);
+
+        Card sunInBottle = new Card("Sun in bottle",35,2,0,15, Card.cardType.Potion,"/pictures/slonce_w_butelce.png",15);
+        allCard.add(sunInBottle);
+
+        Card chariot = new Card("Chariot",36,1,10,0, Card.cardType.Weapon,"/pictures/rydwan.png",0);
+        allCard.add(chariot);
+
+        Card dropTorch = new Card("Drop torch",37,2,10,0, Card.cardType.Weapon,"/pictures/upuszczenie_pochodni.png",0);
+        allCard.add(dropTorch);
+
+        // Pandora (37-41) 5
+
+        Card pandorasBox = new Card("Pandora's box",38,3,20,0, Card.cardType.Magic,"/pictures/puszka_pandory.png",0);
+        allCard.add(pandorasBox);
+
+        Card duplicity = new Card("Duplicity",39,1,0,0, Card.cardType.Magic,"/pictures/obluda.png",0);
+        allCard.add(duplicity);
+
+        Card godsGift = new Card("Gods gift",40,2,0,0, Card.cardType.Magic,"/pictures/dar_bogow.png",0);
+        allCard.add(godsGift);
+
+        Card swallowSpell = new Card("Swallow Spell",43,3,0,0, Card.cardType.Magic,"/pictures/czar_jaskolki.png",0);
+        allCard.add(swallowSpell);
+
+        Card pandemonium = new Card("Pandemonium",44,3,0,0, Card.cardType.Fire,"/pictures/pandemonium.png",0);
+        allCard.add(pandemonium);
+
+        // Hydra (42-47) 6
+
+        Card hydraBlood = new Card("Hydra blood",45,2,0,0, Card.cardType.Magic,"/pictures/krew_hydry.png",10);
+        allCard.add(hydraBlood);
+
+        Card hydraHead = new Card("Hydra head",47,2,10,0, Card.cardType.Weapon,"/pictures/glowa_hydry.png",0);
+        allCard.add(hydraHead);
+
+        Card typhonSummon = new Card("Typhon summon",48,3,0,0, Card.cardType.Magic,"/pictures/przywolanie_tyfona.png",0);
+        allCard.add(typhonSummon);
+
+        Card lernaHerb = new Card("Lerna herb",49,3,0,15, Card.cardType.Magic,"/pictures/ziolo_lernejskie.png",15);
+        allCard.add(lernaHerb);
+
+        Card goldenFleece = new Card("Golden fleece",50,2,0,0, Card.cardType.Magic,"/pictures/zlote_runo.png",0);
+        allCard.add(goldenFleece);
+
+        Card snakeBite = new Card("Snake bite",51,1,10,0, Card.cardType.Weapon,"/pictures/ukaszenie_weza.png",0);
+        allCard.add(snakeBite);
+
+        // Zeus (48-53) 6
 
         Card lightningOfZeus = new Card("lightning of Zeus", 15, 3, 25, 0, Card.cardType.Weapon, "/pictures/piorun_zeusa.png", 0);
         allCard.add(lightningOfZeus);
+
+        Card ambrosia = new Card("Ambrosia",53,3,0,0, Card.cardType.Magic,"/pictures/ambrozja.png",20);
+        allCard.add(ambrosia);
+
+        Card egida = new Card("Egida",54,2,0,10, Card.cardType.Weapon,"/pictures/egida.png",0);
+        allCard.add(egida);
+
+        Card soter = new Card("Soter",55,3,0,0, Card.cardType.Magic,"/pictures/soter.png",0);
+        allCard.add(soter);
+
+        Card feniks = new Card("Feniks",56,2,0,0, Card.cardType.Fire,"/pictures/feniks.png",0);
+        allCard.add(feniks);
+
+        Card lordOfTheGods = new Card("Lord of the gods",57,3,0,0, Card.cardType.Magic,"/pictures/wladca_bogow.png",0);
+        allCard.add(lordOfTheGods);
+
+        // Ethon (54-59) 6
+
+        Card appetite = new Card("Appetite",59,2,0,0, Card.cardType.Magic,"/pictures/apetyt.png",10);
+        allCard.add(appetite);
+
+        Card claws = new Card("Claws",60,2,25,0, Card.cardType.Weapon,"/pictures/szpony.png",0);
+        allCard.add(claws);
+
+        Card rainOfFeathers = new Card("Rain of feathers",61,2,0,15, Card.cardType.Weapon,"/pictures/deszcz_pior.png",0);
+        allCard.add(rainOfFeathers);
+
+        Card gliding = new Card("Gliding",62,2,0,0, Card.cardType.Magic,"/pictures/szybowanie.png",0);
+        allCard.add(gliding);
+
+        Card quilting = new Card("Quilting",52,3,0,0, Card.cardType.Weapon,"/pictures/pikowanie.png",0);
+        allCard.add(quilting);
+
+        Card poisonResistance = new Card("Poison resistance",64,2,0,0, Card.cardType.Water,"/pictures/odpornosc_na_zatrucie.png",10);
+        allCard.add(poisonResistance);
+
+        // nagroda na koniec kampanii (60) 1
+
+        Card ethonSlayer = new Card("Ethon slayer",65,4,50,0, Card.cardType.Weapon,"/pictures/pogromca_ethona.png",0);
+        allCard.add(ethonSlayer);
 
         //summony
 
         Card arrow = new Card("Arrow", 13, 1, 7, 0, Card.cardType.Weapon, "/pictures/strzała.png", 0);
         summonCard.add(arrow);
+
+        Card sweetness = new Card("Sweetness",41,2,0,0, Card.cardType.Water,"/pictures/slodkosc.png",20);
+        summonCard.add(sweetness);
+
+        Card pain = new Card("Pain",42,2,0,0, Card.cardType.Fire,"/pictures/cierpienie.png",0);
+        summonCard.add(pain);
+
+        Card bloodArrow = new Card("Blood Arrow",46,2,15,0, Card.cardType.Weapon,"/pictures/krwista_strzala.png",10);
+        summonCard.add(bloodArrow);
     }
 
     public static Card getCard(int id) {
