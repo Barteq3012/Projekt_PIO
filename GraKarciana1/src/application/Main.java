@@ -30,6 +30,8 @@ public class Main extends Application {
     		primaryStage.getIcons().add(new Image("pictures/icon.png"));
     		primaryStage2 = primaryStage;
 
+			AllCard.createCards();
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -38,5 +40,6 @@ public class Main extends Application {
 	public static void main(String[] args) {
 
 		launch(args);
+
 	}
 }

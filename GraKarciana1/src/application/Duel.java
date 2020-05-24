@@ -14,7 +14,7 @@ public class Duel{
     public Duel(Pane table) {
 
         this.table = table;
-        game = new Game(table);
+        game = new Game(table, "Prometeusz", "Kartek", 80, 80, 10, 10);
     }
 
     public void startDuel() {
@@ -22,7 +22,7 @@ public class Duel{
        // allCards = new AllCard();
      //   System.out.println(allCards.allCard.size());
 
-        AllCard.createCards();
+        //AllCard.createCards();
         //System.out.println(AllCard.allCard.size());
 
         playerDeck = new DeckOfCards();

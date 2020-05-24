@@ -20,6 +20,7 @@ public class Player {
     public int sp;
     public int numberOfCardsOnStack;
     public String name;
+    private final int id;
 
     // Nadaje sobie przeciwnika; wskaznik do oponenta
     private Player myEnemy;
@@ -65,12 +66,13 @@ public class Player {
     public Random random = new Random();
 
 
-    public Player(String name, int hp, int sp, CardInHand cardInHand) {
+    public Player(String name, int id, int hp, int sp, CardInHand cardInHand) {
 
         this.name = name;
         this.hp = hp;
         this.sp = sp;
         this.cardInHand = cardInHand;
+        this.id = id;
     }
 
     public void setMyEnemy(Player player) {
@@ -245,7 +247,7 @@ public class Player {
             Image image = new Image(getClass().getResourceAsStream("/pictures/burnn.png"));
             burnImg = new ImageView(image);
 
-            if(name.equals("Bartek")) {
+            if(id == 1) {
 
                 burnImg.setX(1180);
                 burnImg.setY(660);
@@ -270,7 +272,7 @@ public class Player {
 
         burnTimeNumber.setText(String.valueOf(burnTime));
 
-        if(name.equals("Bartek")) {
+        if(id == 1) {
             burnTimeNumber.setX(1180 + 10 - burnTimeNumber.getLayoutBounds().getWidth() / 2);
         }
         else {
@@ -286,7 +288,7 @@ public class Player {
 
             burnTimeNumber.setText(String.valueOf(burnTime));
 
-            if(name.equals("Bartek")) {
+            if(id == 1) {
                 burnTimeNumber.setX(1180 + 10 - burnTimeNumber.getLayoutBounds().getWidth() / 2);
             }
             else {
@@ -313,7 +315,7 @@ public class Player {
             Image image = new Image(getClass().getResourceAsStream("/pictures/pois.png"));
             poisonImg = new ImageView(image);
 
-            if(name.equals("Bartek")) {
+            if(id == 1) {
 
                 poisonImg.setX(1200);
                 poisonImg.setY(660);
@@ -338,7 +340,7 @@ public class Player {
 
         poisonTimeNumber.setText(String.valueOf(poisonTime));
 
-        if(name.equals("Bartek")) {
+        if(id == 1) {
             poisonTimeNumber.setX(1200 + 15 - poisonTimeNumber.getLayoutBounds().getWidth() / 2);
         }
         else {
@@ -354,7 +356,7 @@ public class Player {
 
             poisonTimeNumber.setText(String.valueOf(poisonTime));
 
-            if(name.equals("Bartek")) {
+            if(id == 1) {
                 poisonTimeNumber.setX(1200 + 15 - poisonTimeNumber.getLayoutBounds().getWidth() / 2);
             }
             else {
@@ -381,7 +383,7 @@ public class Player {
             Image image = new Image(getClass().getResourceAsStream("/pictures/blod.png"));
             bleedImg = new ImageView(image);
 
-            if(name.equals("Bartek")) {
+            if(id == 1) {
 
                 bleedImg.setX(1230);
                 bleedImg.setY(660);
@@ -406,7 +408,7 @@ public class Player {
 
         bleedingTimeNumber.setText(String.valueOf(bleedingTime));
 
-        if(name.equals("Bartek")) {
+        if(id == 1) {
             bleedingTimeNumber.setX(1230 + 10 - bleedingTimeNumber.getLayoutBounds().getWidth() / 2);
         }
         else {
@@ -422,7 +424,7 @@ public class Player {
 
             bleedingTimeNumber.setText(String.valueOf(bleedingTime));
 
-            if(name.equals("Bartek")) {
+            if(id == 1) {
                 bleedingTimeNumber.setX(1230 + 10 - bleedingTimeNumber.getLayoutBounds().getWidth() / 2);
             }
             else {
@@ -472,7 +474,7 @@ public class Player {
             newCard.imageView.setPreserveRatio(true);
             newCard.imageView.setX(myEnemy.positionX);
 
-            if (myEnemy.name.equals("Bartek")) {
+            if (myEnemy.id == 1) {
                 newCard.imageView.setY(-150);
             } else {
                 newCard.imageView.setY(250);
@@ -550,7 +552,7 @@ public class Player {
     // funkcja potrzebna do karty charon
     public void charon(){
 
-        if(hp <= 50){
+        if(hp <= 20){
             hp = 0;
         }
     }

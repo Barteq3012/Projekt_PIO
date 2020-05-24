@@ -50,8 +50,8 @@ public class Game {
     Text textOpponentStack = new Text();
     ImageView imgOpponentCardStack = new ImageView();
 
-    public String playerName = "Bartek";
-    public String opponentName = "Kartek";
+   // public String playerName = "Bartek";
+  //  public String opponentName = "Kartek";
 
  //  public TableController tableControl;
 
@@ -61,15 +61,15 @@ public class Game {
     private boolean isEnd = false;
 
 
-    public Game(Pane table) {
+    public Game(Pane table, String playerName, String opponentName, int playerHp, int playerSp, int enemyHp, int enemySp) {
 
-        this.table = table;
+        Game.table = table;
 
         playerCardInHand = new CardInHand(140, 530, table);
         enemyCardInHand = new CardInHand(140, -150, table);
 
-        player = new Player(playerName, 150, 10, playerCardInHand);
-        enemy = new Player(opponentName, 150, 10, enemyCardInHand);
+        player = new Player(playerName, 1,playerHp, playerSp, playerCardInHand);
+        enemy = new Player(opponentName,2,enemyHp, enemySp, enemyCardInHand);
     }
 
 
