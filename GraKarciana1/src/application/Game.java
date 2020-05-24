@@ -612,10 +612,21 @@ public class Game {
 
         try {
 
+            /*
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Pass.fxml"));
+                    Pane passboard =  fxmlLoader.load();
+                   // table.getChildren().setAll(passboard);
+                    Stage window = Main.primaryStage2;
+                    window.getScene().setRoot(passboard);
+                    window.show();
+             */
+
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Win.fxml"));
             Pane winPane =  fxmlLoader.load();
 
+            Stage window = Main.primaryStage2;
 
+            /* Stare
             Stage scoreStage = new Stage();
             scoreStage.setScene(new Scene(winPane));
             scoreStage.show();
@@ -623,6 +634,8 @@ public class Game {
             scoreStage.setOpacity(1);
             scoreStage.setTitle("Wynik");
             scoreStage.getIcons().add(new Image("pictures/icon.png"));
+
+             */
             System.out.println("Wynik");
 
             DropShadow ds = new DropShadow();
@@ -651,6 +664,9 @@ public class Game {
             winPane.getChildren().addAll(scorePlayer);
             winPane.getChildren().addAll(scoreOpponent);
 
+            window.getScene().setRoot(winPane); /* nowe */
+            window.show();
+
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -665,6 +681,9 @@ public class Game {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Lose.fxml"));
             Pane losePane =  fxmlLoader.load();
 
+            Stage window = Main.primaryStage2;
+
+            /* stare
             Stage scoreStage = new Stage();
             scoreStage.setScene(new Scene(losePane));
             scoreStage.show();
@@ -672,6 +691,8 @@ public class Game {
             scoreStage.setOpacity(1);
             scoreStage.setTitle("Wynik");
             scoreStage.getIcons().add(new Image("pictures/icon.png"));
+
+             */
             System.out.println("Wynik");
 
             DropShadow ds = new DropShadow();
@@ -700,7 +721,8 @@ public class Game {
             losePane.getChildren().addAll(scorePlayer);
             losePane.getChildren().addAll(scoreOpponent);
 
-
+            window.getScene().setRoot(losePane); /* nowe */
+            window.show();
 
 
         } catch (Exception e) {
