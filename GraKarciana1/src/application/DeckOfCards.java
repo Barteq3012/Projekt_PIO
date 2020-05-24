@@ -10,20 +10,22 @@ public class DeckOfCards {
 
     private Random generator = new Random();
 
-    private int size = 0;
+    private int cardsLimit = 0;
 
     int numberOfWeakcards = 0;
     int numberOfMediumcards = 0;
     int numberOfGoodCards = 0;
 
-    public DeckOfCards() {
+    public DeckOfCards(int cardsLimit) {
+
+        this.cardsLimit = cardsLimit;
 
         setDeck();
     }
 
     public void setDeck() {
 
-        for(int i = 40 ; i < 61; i++) {
+        for(int i = 0 ; i < cardsLimit; i++) {
 
             Card drawCard = AllCard.getCard(i);
 

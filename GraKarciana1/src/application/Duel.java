@@ -25,8 +25,8 @@ public class Duel{
         //AllCard.createCards();
         //System.out.println(AllCard.allCard.size());
 
-        playerDeck = new DeckOfCards();
-        enemyDeck = new DeckOfCards();
+        playerDeck = new DeckOfCards(10);
+        enemyDeck = new DeckOfCards(10);
 
         game.playerSmallDeck.setSmallDeck(playerDeck);
         game.enemySmallDeck.setSmallDeck(enemyDeck);
