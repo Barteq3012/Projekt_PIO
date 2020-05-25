@@ -63,10 +63,13 @@ public class Game {
         Game.table = table;
 
         playerCardInHand = new CardInHand(140, 530, table);
-        enemyCardInHand = new CardInHand(140, -150, table);
+        enemyCardInHand = new CardInHand(140, 10, table); //-150
 
         player = new Player(playerName, 1,playerHp, playerSp, playerCardInHand);
         enemy = new Player(opponentName,2,enemyHp, enemySp, enemyCardInHand);
+
+        playerCardInHand.setOwner(player);
+        enemyCardInHand.setOwner(enemy);
     }
 
     public void startGame() {
@@ -236,7 +239,9 @@ public class Game {
 
                 if(!isEnd) {
 
-                    enemy.card = enemyCardInHand.getCardFromEnemyHand(player.hp, player.sp, enemy.hp, enemy.sp); //losuje kartę z ręki, dalej to samo, co u gracza
+                    enemy.card = enemyCardInHand.getCardFromEnemyHand(); //losuje kartę z ręki, dalej to samo, co u gracza
+                    enemyCardInHand.returnToHandFromCubby(); //przywraca karty do ręki ze schowka
+
                     enemy.cardsOntable.add(enemy.card);
 
                     enemy.card.owner = enemy;

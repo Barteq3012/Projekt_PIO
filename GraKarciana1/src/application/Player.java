@@ -23,7 +23,7 @@ public class Player {
     private final int id;
 
     // Nadaje sobie przeciwnika; wskaznik do oponenta
-    private Player myEnemy;
+    public Player myEnemy;
 
     public Card card;
     public CardInHand cardInHand;
@@ -37,10 +37,10 @@ public class Player {
 
     // zmienne dotyczące efektów nakładanych przez karte i efektów czasowych
     public int burnTime = 0;   // nadanie czasu trwania podpalenia
-    private int poisonTime = 0;  // nadanie czasu trwania zatrucia
+    public int poisonTime = 0;  // nadanie czasu trwania zatrucia
     public int bleedingTime = 0;  // nadanie czasu trwania krawawienia
-    private int freezing = 0; // zmienna warunkująca procent szans na wystąpienie efektu
-    private int immuneTime = 0;
+    public int freezing = 0; // zmienna warunkująca procent szans na wystąpienie efektu
+    public int immuneTime = 0;
     public int effectsImmuneTime = 0;
 
     private Text burnTimeNumber = new Text();
@@ -56,7 +56,7 @@ public class Player {
     private  boolean isDamaged = false;
 
     private boolean crownReady = false; // zmiena stworzonana rzecz korony smierci
-    private boolean flameArmor = false; // potrzebne do flame Armor
+    public boolean flameArmor = false; // potrzebne do flame Armor
     public boolean medusa = false;
     public boolean hydraHead = false;
 
