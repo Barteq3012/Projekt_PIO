@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="introPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.IntroController">
+   <children>
+      <ImageView fx:id="introImage" fitHeight="242.0" fitWidth="325.0" layoutX="508.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pictures/intro.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="introText" layoutX="574.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BRBK" textAlignment="CENTER">
+         <font>
+            <Font name="Berlin Sans FB" size="44.0" />
+         </font>
+         <fill>
+            <LinearGradient endX="1.0" endY="0.9666666666666667" startX="0.9809523809523809">
+               <stops>
+                  <Stop color="#d71010" />
+                  <Stop color="#d3a61f" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Text>
+      <Text fx:id="introText2" fill="WHITE" layoutX="546.0" layoutY="611.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prezentują">
+         <font>
+            <Font name="Open Sans" size="32.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
