@@ -7,10 +7,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane fx:id="authorsAnchor" minHeight="500.0" minWidth="700.0" styleClass="bodybg3" stylesheets="@Authors.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AuthorsController">
+<AnchorPane fx:id="authorsAnchor" minHeight="700.0" minWidth="1280.0" styleClass="bodybg3" stylesheets="@Authors.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AuthorsController">
    <children>
-      <Text layoutX="266.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autorzy" wrappingWidth="173.033203125">
+      <Text layoutX="553.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autorzy" wrappingWidth="173.033203125">
          <font>
             <Font size="50.0" />
          </font>
@@ -23,9 +22,9 @@
             </LinearGradient>
          </fill>
       </Text>
-      <Text layoutX="197.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bartłomiej Czekaj">
+      <Text layoutX="174.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bartłomiej Czekaj">
          <font>
-            <Font size="18.0" />
+            <Font size="36.0" />
          </font>
          <fill>
             <LinearGradient endX="1.0" endY="1.0">
@@ -36,9 +35,9 @@
             </LinearGradient>
          </fill>
       </Text>
-      <Text layoutX="194.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bartłomiej Kopyść">
+      <Text layoutX="169.0" layoutY="396.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bartłomiej Kopyść">
          <font>
-            <Font size="18.0" />
+            <Font size="36.0" />
          </font>
          <fill>
             <LinearGradient endX="1.0" endY="1.0">
@@ -49,9 +48,9 @@
             </LinearGradient>
          </fill>
       </Text>
-      <Text layoutX="375.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Robert Mazurek">
+      <Text layoutX="847.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Robert Mazurek">
          <font>
-            <Font size="18.0" />
+            <Font size="36.0" />
          </font>
          <fill>
             <LinearGradient endX="1.0" endY="1.0">
@@ -62,9 +61,9 @@
             </LinearGradient>
          </fill>
       </Text>
-      <Text layoutX="372.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kacper Tarłowski">
+      <Text layoutX="840.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kacper Tarłowski">
          <font>
-            <Font size="18.0" />
+            <Font size="36.0" />
          </font>
          <fill>
             <LinearGradient endX="1.0" endY="1.0">
@@ -75,7 +74,7 @@
             </LinearGradient>
          </fill>
       </Text>
-      <Button fx:id="returnButton" layoutX="273.0" layoutY="405.0" mnemonicParsing="false" onAction="#returnToMenuAction" prefHeight="25.0" prefWidth="160.0" text="Powrót">
+      <Button fx:id="returnButton" layoutX="560.0" layoutY="619.0" mnemonicParsing="false" onAction="#returnToMenuAction" prefHeight="25.0" prefWidth="160.0" text="Powrót">
          <font>
             <Font size="14.0" />
          </font>

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane fx:id="howPane" minHeight="500.0" minWidth="700.0" styleClass="bodybg3" stylesheets="@Authors.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HowToPlayController">
+<AnchorPane fx:id="howPane" minHeight="700.0" minWidth="1280.0" styleClass="bodybg3" stylesheets="@Authors.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HowToPlayController">
    <children>
-      <Text layoutX="252.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jak grać?" wrappingWidth="201.033203125">
+      <Text layoutX="539.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jak grać?" wrappingWidth="201.033203125">
          <font>
             <Font size="50.0" />
          </font>
@@ -23,12 +24,97 @@
             </LinearGradient>
          </fill>
       </Text>
-      <Button fx:id="returnButton" layoutX="273.0" layoutY="405.0" mnemonicParsing="false" onAction="#returnToMenuAction" prefHeight="25.0" prefWidth="160.0" text="Powrót">
+      <Button fx:id="returnButton" layoutX="560.0" layoutY="628.0" mnemonicParsing="false" onAction="#returnToMenuAction" prefHeight="25.0" prefWidth="160.0" text="Powrót">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Text fill="WHITE" layoutX="48.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Work in progress :)" wrappingWidth="609.6953125">
+      <Text fill="WHITE" layoutX="50.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Włącz Kampanię albo Pojedynek." wrappingWidth="609.6953125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="50.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. W przypadku Kampanii wybierz poziom." wrappingWidth="609.6953125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="50.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3. Karty są losowane do twojej małej puli kart. Możesz zagrać kartami, które masz w ręcę. By to zrobić kliknij na kartę." wrappingWidth="897.6953125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="50.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4. Zwracaj uwagę na działanie karty. Szczegóły są omówione w opisie karty. Rzucaj karty z rozwagą." wrappingWidth="897.6953125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="50.0" layoutY="302.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5. Gra kończy się, jeśli któremuś graczowi zostanie 0 Punktów Życia (HP) lub, jeśli obu graczom skończą się karty." wrappingWidth="897.6953125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="50.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6. By zobaczyć wyniki kliknij na guzik WYNIKI, którym pojawi się na środku planszy." wrappingWidth="897.6953125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="43.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Celem gry jest pokonanie wszystkich przeciwników i zdobycia Ognia Prometejskiego. " wrappingWidth="897.6953125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="43.0" layoutY="439.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Powodzenia!" wrappingWidth="897.6953125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="50.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Efekty występujące w grze:">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="53.0" fitWidth="66.0" layoutX="43.0" layoutY="535.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pictures/blod.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="75.0" fitWidth="44.0" layoutX="421.0" layoutY="525.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pictures/burnn.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="67.0" fitWidth="58.0" layoutX="783.0" layoutY="535.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../pictures/pois.png" />
+         </image>
+      </ImageView>
+      <Text fill="WHITE" layoutX="95.0" layoutY="554.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Krwawienie: -2 HP co turę">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="477.0" layoutY="554.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Podpalenie: -3 HP co turę" wrappingWidth="242.44921875">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="861.0" layoutY="553.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zatrucie: -5 HP co turę">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="95.0" layoutY="583.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Czas działania: 8 tur">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="482.0" layoutY="586.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Czas działania: 6 tur">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="860.0" layoutY="586.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Czas działania: 4 tur">
          <font>
             <Font size="20.0" />
          </font>
