@@ -34,7 +34,7 @@ public class Main extends Application {
 
 			ReadFile.getLevel();
 			//ReadFile.setLevel("2");
-			//System.out.println(ReadFile.level);
+			System.out.println(ReadFile.level);
 
 
 		} catch(Exception e) {

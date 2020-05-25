@@ -18,8 +18,6 @@ public class MenuController {
 
 	Duel duel;
 
-
-
 	@FXML
     private Pane menuPane;
 
@@ -46,8 +44,8 @@ public class MenuController {
 			window.getScene().setRoot(tableRoot);
 			window.show();
 
-			//duel.startDuel();
-			campaign.startLevel1(tableRoot);
+			duel.startDuel();
+			//campaign.startLevel3(tableRoot);
   
     	} catch (Exception e) {
     		System.err.println(e.getMessage());

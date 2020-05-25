@@ -233,6 +233,11 @@ public class AllCard {
 
     public static Card getCard(int id) {
 
-        return allCard.get(id);
+        Card drawCard = allCard.get(id);
+
+        Card copyCard = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
+                drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
+
+        return copyCard;
     }
 }

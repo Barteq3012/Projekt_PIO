@@ -462,25 +462,25 @@ public class Player {
 
         if(hydraHead && myEnemy.isDamaged){
 
-            Card hydraHead = AllCard.allCard.get(43);
+            Card hydraHead = AllCard.getCard(43);
 
-            Card newCard = new Card(hydraHead.getName(),hydraHead.getId(), hydraHead.getValue(), hydraHead.getDamage(), hydraHead.getArmor(),
-                    hydraHead.getType(), hydraHead.getImageName(), hydraHead.getHpIncrease());
+            myEnemy.cardsOntable.add(hydraHead);
 
-            myEnemy.cardsOntable.add(newCard);
+            hydraHead.owner = myEnemy;
+            hydraHead.onTable = true;
 
-            myEnemy.cardInHand.hand.getChildren().add(newCard.imageView);
-            newCard.imageView.fitWidthProperty().bind(myEnemy.cardInHand.hand.widthProperty());
-            newCard.imageView.setPreserveRatio(true);
-            newCard.imageView.setX(myEnemy.positionX);
+            myEnemy.cardInHand.hand.getChildren().add(hydraHead.imageView);
+            hydraHead.imageView.fitWidthProperty().bind(myEnemy.cardInHand.hand.widthProperty());
+            hydraHead.imageView.setPreserveRatio(true);
+            hydraHead.imageView.setX(myEnemy.positionX);
 
             if (myEnemy.id == 1) {
-                newCard.imageView.setY(-150);
+                hydraHead.imageView.setY(-150);
             } else {
-                newCard.imageView.setY(250);
+                hydraHead.imageView.setY(250);
             }
 
-            newCard.action(myEnemy, this);
+            hydraHead.action(myEnemy, this);
 
             myEnemy.positioning();
         }

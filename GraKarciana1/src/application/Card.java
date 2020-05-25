@@ -214,8 +214,8 @@ public class Card {
                     player.increaseHp(player.cardInHand.getSize());
 
                 } else if (name.equals("Anger of God")){
-
-                    freezing(enemy, 50);
+                    
+                    enemy.setFreezing(50);
 
                 } else if (name.equals("Rays of the Sun")){
 
@@ -274,6 +274,9 @@ public class Card {
                         int randomNumber = random.nextInt(enemyCardsInHand.size());
 
                         Card randCard = enemyCardsInHand.get(randomNumber);
+
+                        enemy.cardInHand.inHandPosition[randCard.positionOnTable] = 0;
+                        randCard.positionOnTable = 0;
 
                         enemyCardsInHand.remove(randCard);
                         enemy.cardInHand.hand.getChildren().remove(randCard.imageView);

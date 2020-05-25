@@ -46,10 +46,7 @@ public class DeckOfCards {
 
             Card drawCard = AllCard.getCard(i);
 
-            Card copyCard = new Card(drawCard.getName(),drawCard.getId(), drawCard.getValue(), drawCard.getDamage(), drawCard.getArmor(),
-                    drawCard.getType(), drawCard.getImageName(), drawCard.getHpIncrease());
-
-            deck.add(copyCard);
+            deck.add(drawCard);
         }
     }
 

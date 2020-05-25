@@ -12,6 +12,10 @@ public class SmallDeckOfCards {
 
     private int size = 0;
 
+    int numberOfWeakCards = 0;
+    int numberOfMediumCards = 0;
+    int numberOfGoodCards = 0;
+
 
     public SmallDeckOfCards() {
 
@@ -29,7 +33,7 @@ public class SmallDeckOfCards {
 
         for(int i = 30 ; i < 37; i++) {
 
-            smallDeck.add(deck.getCard(i));
+            smallDeck.add(AllCard.getCard(i));
         }
 
         for(int i = 0 ; i < 3; i++) {
@@ -43,6 +47,92 @@ public class SmallDeckOfCards {
         }
 
         for(int i = 0 ; i < 2; i++) {
+
+            randValue3Card(deck);
+        }
+    }
+
+    public void setSmallDeckBoss2(DeckOfCards deck) {
+
+        for(int i = 37 ; i < 42; i++) {
+
+            smallDeck.add(AllCard.getCard(i));
+        }
+
+        for(int i = 0 ; i < 3; i++) {
+
+            randValue1Card(deck);
+        }
+
+        for(int i = 0 ; i < 4; i++) {
+
+            randValue2Card(deck);
+        }
+
+        for(int i = 0 ; i < 3; i++) {
+
+            randValue3Card(deck);
+        }
+    }
+
+    public void setSmallDeckBoss3(DeckOfCards deck) {
+
+        for(int i = 42 ; i < 48; i++) {
+
+            smallDeck.add(AllCard.getCard(i));
+        }
+
+        smallDeck.add(AllCard.getCard(5));
+
+        randValue1Card(deck);
+
+        for(int i = 0 ; i < 3; i++) {
+
+            randValue2Card(deck);
+        }
+
+        for(int i = 0 ; i < 4; i++) {
+
+            randValue3Card(deck);
+        }
+    }
+
+    public void setSmallDeckBoss4(DeckOfCards deck) {
+
+        for(int i = 48 ; i < 54; i++) {
+
+            smallDeck.add(AllCard.getCard(i));
+        }
+
+        for(int i = 0 ; i < 2; i++) {
+
+            randValue1Card(deck);
+        }
+
+        for(int i = 0 ; i < 2; i++) {
+
+            randValue2Card(deck);
+        }
+
+        for(int i = 0 ; i < 5; i++) {
+
+            randValue3Card(deck);
+        }
+    }
+
+    public void setSmallDeckBoss5(DeckOfCards deck) {
+
+        for(int i = 54 ; i < 60; i++) {
+
+            smallDeck.add(AllCard.getCard(i));
+        }
+
+        for(int i = 0 ; i < 3; i++) {
+
+            randValue2Card(deck);
+        }
+
+        for(int i = 0 ; i < 6; i++) {
 
             randValue3Card(deck);
         }
@@ -105,13 +195,43 @@ public class SmallDeckOfCards {
 
         Card drawCard = deck.getCard(randomCardId);
 
-        if(!drawCard.alreadyRandToSmallDeck) {
+        if(drawCard.getValue() == 1 && !drawCard.alreadyRandToSmallDeck) {
 
-            smallDeck.add(drawCard);
-            drawCard.alreadyRandToSmallDeck = true;
+            if(numberOfWeakCards < 5 ) {
+
+                numberOfWeakCards++;
+                smallDeck.add(drawCard);
+                drawCard.alreadyRandToSmallDeck = true;
+            }
+            else {
+                supDraw(deck);
+            }
+        }
+        else if(drawCard.getValue() == 2 && !drawCard.alreadyRandToSmallDeck) {
+
+            if(numberOfMediumCards < 6 ) {
+
+                numberOfMediumCards++;
+                smallDeck.add(drawCard);
+                drawCard.alreadyRandToSmallDeck = true;
+            }
+            else {
+                supDraw(deck);
+            }
+        }
+        else if((drawCard.getValue() == 3 || drawCard.getValue() == 4)  && !drawCard.alreadyRandToSmallDeck) {
+
+            if(numberOfGoodCards < 4 ) {
+
+                numberOfGoodCards++;
+                smallDeck.add(drawCard);
+                drawCard.alreadyRandToSmallDeck = true;
+            }
+            else {
+                supDraw(deck);
+            }
         }
         else {
-
             supDraw(deck);
         }
     }
