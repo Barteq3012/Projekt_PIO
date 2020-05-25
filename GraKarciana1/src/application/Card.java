@@ -181,6 +181,8 @@ public class Card {
 
                         player.card.imageView.setImage(randCard.image);
                         randCard.action(player, enemy);
+                    } else {
+                        player.cardsOntable.add(this);
                     }
 
                 }else if (name.equals("Medusa Look")){

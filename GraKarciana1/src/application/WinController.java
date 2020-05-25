@@ -43,8 +43,6 @@ public class WinController {
     @FXML
     private void initialize() {
 
-
-
     }
 
 }

@@ -10,14 +10,7 @@ public class AllCard {
     public static List<Card> allCard = new ArrayList<>();
     public static List<Card> summonCard = new ArrayList<>();
 
-    public AllCard() {
-        createCards();
-    }
-
     public static void createCards() {
-
-        //Card nothing = new Card("Nothing", 0, 0, 0, 0, Card.cardType.Magic, "Nothing", 0);
-        //allCard.add(nothing);
 
         //karty value 1 (0-9) 10
 

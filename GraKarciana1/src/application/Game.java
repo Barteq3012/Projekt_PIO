@@ -50,19 +50,16 @@ public class Game {
     Text textOpponentStack = new Text();
     ImageView imgOpponentCardStack = new ImageView();
 
-   // public String playerName = "Bartek";
-  //  public String opponentName = "Kartek";
-
- //  public TableController tableControl;
-
     public static Pane table;
 
     public static boolean ready = false;
     private boolean isEnd = false;
 
+    public static int mode; // 1- kampania, 2 - pojedynek
 
-    public Game(Pane table, String playerName, String opponentName, int playerHp, int playerSp, int enemyHp, int enemySp) {
+    public Game(int mode, Pane table, String playerName, String opponentName, int playerHp, int playerSp, int enemyHp, int enemySp) {
 
+        Game.mode = mode;
         Game.table = table;
 
         playerCardInHand = new CardInHand(140, 530, table);
@@ -71,7 +68,6 @@ public class Game {
         player = new Player(playerName, 1,playerHp, playerSp, playerCardInHand);
         enemy = new Player(opponentName,2,enemyHp, enemySp, enemyCardInHand);
     }
-
 
     public void startGame() {
 
@@ -232,9 +228,11 @@ public class Game {
             @Override
             public void handle(WorkerStateEvent event) {
 
-                enemy.checkEffects();
-                setPoints();
-                checkEnd();
+                if (!isEnd && !enemyCardInHand.emptyHand()) {
+                    enemy.checkEffects();
+                    setPoints();
+                    checkEnd();
+                }
 
                 if(!isEnd) {
 
@@ -354,12 +352,12 @@ public class Game {
                             if (player.hp > enemy.hp)
                             {
                                 win();
-                                ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                               // ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
                             }
                             else
                             {
                                 lose();
-                                ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                               // ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
                             }
                         }
                     });
@@ -416,12 +414,12 @@ public class Game {
                     if (player.hp > enemy.hp)
                     {
                         win();
-                        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                       // ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
                     }
                     else
                     {
                         lose();
-                        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                       // ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
                     }
                 }
             });
@@ -608,7 +606,6 @@ public class Game {
     }
 
     void win() {
-
 
         try {
 

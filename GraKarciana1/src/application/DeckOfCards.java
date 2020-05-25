@@ -16,9 +16,26 @@ public class DeckOfCards {
     int numberOfMediumcards = 0;
     int numberOfGoodCards = 0;
 
-    public DeckOfCards(int cardsLimit) {
+    public DeckOfCards(int level) {
 
-        this.cardsLimit = cardsLimit;
+        if(level == 1) {
+            cardsLimit = 30;
+        }
+        else if(level == 2) {
+            cardsLimit = 37;
+        }
+        else if(level == 3) {
+            cardsLimit = 42;
+        }
+        else if(level == 4) {
+            cardsLimit = 48;
+        }
+        else if(level == 5) {
+            cardsLimit = 54;
+        }
+        else if(level == 6) {
+            cardsLimit = 61;
+        }
 
         setDeck();
     }
@@ -122,9 +139,7 @@ public class DeckOfCards {
         }
     }
 
-    public Card getCard() {
-
-        int randomCardId = generator.nextInt(deck.size());
+    public Card getCard(int randomCardId) {
 
         Card drawCard = deck.get(randomCardId);
 

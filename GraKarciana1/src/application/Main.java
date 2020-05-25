@@ -32,6 +32,11 @@ public class Main extends Application {
 
 			AllCard.createCards();
 
+			ReadFile.getLevel();
+			//ReadFile.setLevel("2");
+			//System.out.println(ReadFile.level);
+
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
