@@ -143,6 +143,7 @@ public class CardInHand {
             }
         }
 
+        //ratunek
         if (owner.hp < 20 && owner.freezing <= 50) {
 
             if (searchCard(55) != -1) {
@@ -192,8 +193,8 @@ public class CardInHand {
             }
         }
 
-        //jeśli gracz ma tylko jedną kartę to jaskółka bez względu na zamrożenie
-        if (owner.myEnemy.cardInHand.getSize() == 1) {
+        //jeśli gracz ma tylko jedną kartę to jaskółka
+        if (owner.myEnemy.cardInHand.getSize() == 1 && owner.freezing < 100) {
 
             if (searchCard(43) != -1) {
                 return supDraw(searchCard(43)); //jaskółka
@@ -261,11 +262,6 @@ public class CardInHand {
 
                 cardsInHand.remove(card);
             }
-        }
-
-        //jak najszybciej rzucić
-        if (searchCard(27) != -1) {
-            return supDraw(searchCard(27)); // korona infinity
         }
 
         if(searchCard(52) != -1 && owner.myEnemy.sp > 0) {
@@ -392,6 +388,11 @@ public class CardInHand {
             }
         }
 
+        //jak najszybciej rzucić
+        if (searchCard(27) != -1) {
+            return supDraw(searchCard(27)); // korona infinity
+        }
+
         if (cardsInHand.size() > 6 && owner.myEnemy.immuneTime == 0) {
             if (searchCard(30) != -1) {
                 return supDraw(searchCard(30)); //pora ż&ś
@@ -419,12 +420,6 @@ public class CardInHand {
 
             if (searchCard(11) != -1) {
                 return supDraw(searchCard(11)); //topór większy prior
-            }
-        }
-
-        if (owner.myEnemy.immuneTime == 0 && owner.myEnemy.actualCardData && owner.myEnemy.card.getDamage() > 0) {
-            if (searchCard(21) != -1) {
-                return supDraw(searchCard(21)); //smocza krew średni prior
             }
         }
 
@@ -464,6 +459,12 @@ public class CardInHand {
         Card drawCardd = getCardWithNoSpecialCondition();
         if (drawCardd != null) {
             return drawCardd;
+        }
+
+        if (owner.myEnemy.immuneTime == 0 && owner.myEnemy.actualCardData && owner.myEnemy.card.getDamage() > 0) {
+            if (searchCard(21) != -1) {
+                return supDraw(searchCard(21)); //smocza krew średni prior
+            }
         }
 
         //jeśli gracz ma tarcze

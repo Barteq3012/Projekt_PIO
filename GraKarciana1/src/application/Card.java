@@ -24,7 +24,7 @@ public class Card {
 
     private boolean chosen = false;
     public boolean onTable = false;
-    public int positionOnTable = 0;
+    public int positionOnTable = -1;
     public double absolutePosition;
     public int repeated = 0;
     public Image image;
@@ -85,7 +85,7 @@ public class Card {
                 owner.setNiceCards(); // jesli karta na stole to po zjechaniu układa ładnie karty
             }
 
-            if (positionOnTable > 0) {
+            if (positionOnTable >= 0) {
 
                 ownerHand.setNiceCards();
             }

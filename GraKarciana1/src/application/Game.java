@@ -171,7 +171,7 @@ public class Game {
         player.card.onTable = true;
 
         playerCardInHand.inHandPosition[player.card.positionOnTable] = 0;
-        player.card.positionOnTable = 0;
+        player.card.positionOnTable = -1;
 
         //akcja animacja
         player.moveCard(1);
