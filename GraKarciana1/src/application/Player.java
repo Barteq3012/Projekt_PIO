@@ -55,7 +55,7 @@ public class Player {
     private  boolean isStartBleeding = false;
     private  boolean isDamaged = false;
 
-    private boolean crownReady = false; // zmiena stworzonana rzecz korony smierci
+    private int crown = 0; // zmiena stworzonana rzecz korony smierci
     public boolean flameArmor = false; // potrzebne do flame Armor
     public boolean medusa = false;
     public boolean hydraHead = false;
@@ -105,8 +105,8 @@ public class Player {
     // wywołanie wszystkich efektów czasowych
     public void checkEffects() {
 
-        if (crownReady) {
-            hp += 2;
+        if (crown > 0) {
+            hp += 2 * crown;
         }
 
         if(immuneTime > 0) {
@@ -125,9 +125,9 @@ public class Player {
     //metoda do animacji rzucania kart
     public void moveCard(int id) {
 
-        TranslateTransition t = new TranslateTransition(Duration.millis(1000), card.imageView);
-
         card.imageView.toFront();
+
+        TranslateTransition t = new TranslateTransition(Duration.millis(1000), card.imageView);
 
         t.setFromX(0);
         t.setFromY(0);
@@ -178,7 +178,7 @@ public class Player {
 
         } else if (cardsOntable.size() > 8) {
             //po zagęszczeniu co ile układać
-            positionX += 70;
+            positionX += 50;
         } else {
             //przed zagęszczeniem co ile układać
             positionX += 110;
@@ -529,9 +529,8 @@ public class Player {
     }
 
     // funkcja pozwala uruchomic funkcje dodajaca hp co ture
-    public void healByTurn(boolean crownReady) {
-        this.crownReady = true;
-
+    public void healByTurn() {
+        crown++;
     }
 
     // metoda do wypalenia

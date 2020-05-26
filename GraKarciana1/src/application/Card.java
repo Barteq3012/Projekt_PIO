@@ -20,6 +20,7 @@ public class Card {
     private String imageName;
 
     public Player owner;
+    public CardInHand ownerHand;
 
     private boolean chosen = false;
     public boolean onTable = false;
@@ -32,6 +33,7 @@ public class Card {
     public boolean alreadyRandToSmallDeck = false;
 
     public enum cardType {Fire, Water, Ice, Weapon, Action, Counter, Potion, Magic}
+
     private final cardType type;
 
     int burnTime = 6; // czas nadany przez jedna karte podpalenia
@@ -78,9 +80,14 @@ public class Card {
 
         imageView.setOnMouseExited(e -> {
 
-            if(onTable) {
+            if (onTable) {
 
                 owner.setNiceCards(); // jesli karta na stole to po zjechaniu układa ładnie karty
+            }
+
+            if (positionOnTable > 0) {
+
+                ownerHand.setNiceCards();
             }
 
             imageView.setSmooth(false);
@@ -91,7 +98,7 @@ public class Card {
 
         imageView.setOnMouseClicked(ee -> {
 
-            if(Game.ready) {
+            if (Game.ready) {
                 setChosen();
             }
         });
@@ -116,7 +123,7 @@ public class Card {
                         Random random = new Random();
                         int randomNumber = random.nextInt(100) + 1;
 
-                        if(randomNumber > 50) {
+                        if (randomNumber > 50) {
                             ignite(enemy);
                         }
                     }
@@ -135,7 +142,7 @@ public class Card {
 
                         ignite(enemy);
 
-                        if(player.hp < enemy.hp) {
+                        if (player.hp < enemy.hp) {
 
                             enemy.dealDamage(20);
                         }
@@ -171,7 +178,7 @@ public class Card {
 
                     Random random = new Random();
 
-                    if(player.cardsOntable.size() > 0) {
+                    if (player.cardsOntable.size() > 0) {
 
                         int randomNumber = random.nextInt(player.cardsOntable.size());
 
@@ -185,68 +192,63 @@ public class Card {
                         player.cardsOntable.add(this);
                     }
 
-                }else if (name.equals("Medusa Look")){
+                } else if (name.equals("Medusa Look")) {
 
                     // zabrania wywołac karte dającą tarcze oraz karty leczace
                     enemy.medusa = true;
 
-                }else if (name.equals("Summon Cerberus")){
+                } else if (name.equals("Summon Cerberus")) {
                     bleeding(enemy);
                     poison(enemy);
-                }else if (name.equals("Crown of Immortality")){
+                } else if (name.equals("Crown of Immortality")) {
 
-                    player.healByTurn(true);
+                    player.healByTurn();
                     // dodaje 2hp co ture
 
-                }else if (name.equals("Burnout")){
+                } else if (name.equals("Burnout")) {
 
                     enemy.letBurnout();
                     //zadaje obrazenia z podpalenia i nie zdejmuje go
 
-                }else if (name.equals("Charon")){
+                } else if (name.equals("Charon")) {
 
                     // zabija przeciwnika jeśli ma 20 i mniej hp, nie uwzglednia tarczy
                     enemy.charon();
 
-                } else if (name.equals("Time of life and death")){
+                } else if (name.equals("Time of life and death")) {
 
                     enemy.dealDamage(enemy.cardInHand.getSize());
                     player.increaseHp(player.cardInHand.getSize());
 
-                } else if (name.equals("Anger of God")){
-                    
+                } else if (name.equals("Anger of God")) {
+
                     enemy.setFreezing(50);
 
-                } else if (name.equals("Rays of the Sun")){
+                } else if (name.equals("Rays of the Sun")) {
 
                     player.purification(true, true, true, false);
 
-                } else if (name.equals("Dazzle")){
+                } else if (name.equals("Dazzle")) {
 
                     enemy.setFreezing(100); //blok
 
                     enemy.increaseSp(-15);
 
-                    if(enemy.sp < 0) {
+                    if (enemy.sp < 0) {
                         enemy.sp = 0;
                     }
 
-                } else if (name.equals("Pandora's box")){
+                } else if (name.equals("Pandora's box")) {
 
-                    if(player.bleedingTime > 0) {
+                    if (player.bleedingTime > 0) {
 
                         enemy.dealDamage(10);
                     }
 
-                } else if (name.equals("Duplicity")){
+                } else if (name.equals("Duplicity")) {
 
-                    if(enemy.sp > 0) {
-
-                        int sup;
-                        sup = enemy.hp;
-                        enemy.hp = enemy.sp;
-                        enemy.sp = sup;
-                    }
+                    player.addImmuneTime(1);
+                    player.addEffectsImmuneTime(1);
 
                 } else if (name.equals("Gods gift")) {
 
@@ -263,13 +265,13 @@ public class Card {
                         enemy.cardInHand.drawSweetness();
                     }
 
-                } else if (name.equals("Swallow Spell")){
+                } else if (name.equals("Swallow Spell")) {
 
                     List<Card> enemyCardsInHand = enemy.cardInHand.getCardsInHand();
 
                     Random random = new Random();
 
-                    if(enemyCardsInHand.size() > 0) {
+                    if (enemyCardsInHand.size() > 0) {
 
                         int randomNumber = random.nextInt(enemyCardsInHand.size());
 
@@ -281,16 +283,16 @@ public class Card {
                         enemyCardsInHand.remove(randCard);
                         enemy.cardInHand.hand.getChildren().remove(randCard.imageView);
 
-                        if(enemy.burnTime > 0) {
+                        if (enemy.burnTime > 0) {
 
                             player.cardInHand.drawRandCard(randCard);
                         }
                     }
-                } else if (name.equals("Hydra blood")){
+                } else if (name.equals("Hydra blood")) {
 
-                    for(Card card: player.cardsOntable) {
+                    for (Card card : player.cardsOntable) {
 
-                        if(card.id == 13) {
+                        if (card.id == 13) {
 
                             Card bloodArrow = AllCard.summonCard.get(3);
                             player.card.imageView.setImage(bloodArrow.image);
@@ -299,7 +301,7 @@ public class Card {
                             break;
                         }
                     }
-                } else if (name.equals("Typhon summon")){
+                } else if (name.equals("Typhon summon")) {
 
                     poison(enemy);
                     ignite(enemy);
@@ -308,40 +310,38 @@ public class Card {
 
                     player.addImmuneTime(2);
 
-                } else if (name.equals("Ambrosia")){
+                } else if (name.equals("Ambrosia")) {
 
-                    player.purification(true, false,false,false);
+                    player.purification(true, false, false, false);
 
-                } else if (name.equals("Soter")){
+                } else if (name.equals("Soter")) {
 
-                    if(player.hp < 20) {
+                    if (player.hp < 20) {
 
                         player.increaseHp(25);
                     }
 
-                } else if (name.equals("Lord of the gods")){
+                } else if (name.equals("Lord of the gods")) {
 
                     Random random = new Random();
                     int randomNumber = random.nextInt(90) + 1;
 
-                    if(randomNumber <= 30 ) {
+                    if (randomNumber <= 30) {
 
                         player.increaseHp(30);
-                    }
-                    else if(randomNumber <= 60) {
+                    } else if (randomNumber <= 60) {
 
                         player.increaseSp(30);
-                    }
-                    else {
+                    } else {
 
                         enemy.dealDamage(30);
                     }
 
-                } else if (name.equals("Appetite")){
+                } else if (name.equals("Appetite")) {
 
                     enemy.increaseHp(-10);
 
-                } else if (name.equals("Gliding")){
+                } else if (name.equals("Gliding")) {
 
                     enemy.purification(false, false, false, true);
                     player.addImmuneTime(1);
@@ -367,7 +367,7 @@ public class Card {
                     case "Dragon Killer" -> player.purification(false, false, true, false);
                     case "Axe" -> player.dealDamage(5);
                     case "Perseus shield" -> player.increaseSp((int) (player.hp * 0.1));
-                    case "Sun sword" -> freezing(enemy,50);
+                    case "Sun sword" -> freezing(enemy, 50);
                     case "Drop torch" -> ignite(enemy);
                     case "Hydra head" -> enemy.hydraHead = true;
                     case "Snake bite" -> poison(enemy);
@@ -376,11 +376,10 @@ public class Card {
                     case "Rain of feathers" -> freezing(enemy, 100);
                     case "Quilting" -> {
 
-                        if(player.cardsOntable.get(player.cardsOntable.size() - 2).id == 62) {
+                        if (player.cardsOntable.size() > 1 && player.cardsOntable.get(player.cardsOntable.size() - 2).id == 62) {
 
                             enemy.dealDamage(30);
-                        }
-                        else {
+                        } else {
                             enemy.dealDamage(15);
                         }
                     }
@@ -421,7 +420,7 @@ public class Card {
     // podanie dlugosci podpalenia
     private void ignite(Player enemy) {
 
-        if(enemy.effectsImmuneTime == 0) {
+        if (enemy.effectsImmuneTime == 0) {
 
             enemy.addBurnTime(burnTime);
         }
@@ -430,7 +429,7 @@ public class Card {
     //podanie dlugosci zatrucia
     private void poison(Player enemy) {
 
-        if(enemy.effectsImmuneTime == 0) {
+        if (enemy.effectsImmuneTime == 0) {
 
             enemy.addPoisonTime(poisone);
         }
@@ -439,7 +438,7 @@ public class Card {
     // podanie dlugosci krwaweinia
     private void bleeding(Player enemy) {
 
-        if(enemy.effectsImmuneTime == 0) {
+        if (enemy.effectsImmuneTime == 0) {
 
             enemy.addBleedingTime(bleed);
         }
@@ -448,7 +447,7 @@ public class Card {
     // podanie szans na zamrozenie
     private void freezing(Player enemy, int freez) {
 
-        if(enemy.effectsImmuneTime == 0) {
+        if (enemy.effectsImmuneTime == 0) {
             enemy.setFreezing(freez);
         }
     }
@@ -495,7 +494,7 @@ public class Card {
         return hpIncrease;
     }
 
-    public cardType getCardType(){
+    public cardType getCardType() {
         return type;
     }
 }

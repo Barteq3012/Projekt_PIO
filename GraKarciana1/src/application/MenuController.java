@@ -44,8 +44,8 @@ public class MenuController {
 			window.getScene().setRoot(tableRoot);
 			window.show();
 
-			duel.startDuel();
-			//campaign.startLevel3(tableRoot);
+			//duel.startDuel();
+			campaign.startLevel5(tableRoot);
   
     	} catch (Exception e) {
     		System.err.println(e.getMessage());

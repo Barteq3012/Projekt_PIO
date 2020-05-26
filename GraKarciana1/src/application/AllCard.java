@@ -86,8 +86,8 @@ public class AllCard {
 
         //karty value 3 (22 - 29) 8
 
-        Card prometheanFire = new Card("Stal Hefajstosa", 3, 3, 20, 10, Card.cardType.Fire, "/pictures/stal_hefajstosa.png", 0);
-        allCard.add(prometheanFire);
+        Card hefajstos = new Card("Stal Hefajstosa", 3, 3, 20, 10, Card.cardType.Weapon, "/pictures/stal_hefajstosa.png", 0);
+        allCard.add(hefajstos);
 
         Card poseidonTrident = new Card("Poseidon's trident", 6, 3, 20, 0, Card.cardType.Water, "/pictures/trójząb_posejdona.png", 0);
         allCard.add(poseidonTrident);
