@@ -13,6 +13,8 @@ import java.util.ResourceBundle;
 
 public class PassController {
 
+
+
     @FXML
     private AnchorPane scoreAnchorPane;
 
@@ -40,11 +42,13 @@ public class PassController {
         scoreAnchorPane.getChildren().setAll(menu);
     }
 
-    @FXML
+   /* @FXML
     private void initialize() {
 
 
 
     }
+
+    */
 
 }

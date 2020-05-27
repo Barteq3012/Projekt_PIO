@@ -77,12 +77,15 @@ public class CampaignController {
     }
 
     @FXML
-    void threeStart(ActionEvent event) {
-
+    void threeStart(ActionEvent event) throws IOException {
+        AnchorPane lvl3 = FXMLLoader.load(getClass().getResource("/design/Level3.fxml"));
+        campAPain.getChildren().setAll(lvl3);
     }
 
     @FXML
-    void twoStart(ActionEvent event) {
+    void twoStart(ActionEvent event) throws IOException {
+        AnchorPane lvl2 = FXMLLoader.load(getClass().getResource("/design/Level2.fxml"));
+        campAPain.getChildren().setAll(lvl2);
 
     }
 

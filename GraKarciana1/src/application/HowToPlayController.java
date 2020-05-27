@@ -21,6 +21,7 @@ public class HowToPlayController {
         AnchorPane menu = FXMLLoader.load(getClass().getResource("/design/Menu.fxml"));
         howPane.getChildren().setAll(menu);
 
+
     }
 
 }
