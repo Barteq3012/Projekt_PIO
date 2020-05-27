@@ -65,7 +65,7 @@ public class Game {
         Game.table = table;
 
         playerCardInHand = new CardInHand(140, 530, table);
-        enemyCardInHand = new CardInHand(140, 10, table); //-150
+        enemyCardInHand = new CardInHand(140, -160, table);
 
         player = new Player(playerName, 1, playerHp, playerSp, playerCardInHand);
         enemy = new Player(opponentName, 2, enemyHp, enemySp, enemyCardInHand);
@@ -607,19 +607,19 @@ public class Game {
     void win() {
 
         try {
-            if (level == 1) {
+            if (level == 1 && ReadFile.level < 2) {
                 ReadFile.level = 2;
                 ReadFile.setLevel("2");
-            } else if (level == 2) {
+            } else if (level == 2 && ReadFile.level < 3) {
                 ReadFile.level = 3;
                 ReadFile.setLevel("3");
-            } else if (level == 3) {
+            } else if (level == 3 && ReadFile.level < 4) {
                 ReadFile.level = 4;
                 ReadFile.setLevel("4");
-            } else if (level == 4) {
+            } else if (level == 4 && ReadFile.level < 5) {
                 ReadFile.level = 5;
                 ReadFile.setLevel("5");
-            } else if (level == 5) {
+            } else if (level == 5 && ReadFile.level < 6) {
                 ReadFile.level = 6;
                 ReadFile.setLevel("6");
             }
