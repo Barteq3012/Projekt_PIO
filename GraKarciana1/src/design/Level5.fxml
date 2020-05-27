@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="application.Level5Controller"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane fx:id="levelPane" prefHeight="700.0" prefWidth="1280.0" styleClass="bodybg3" stylesheets="@Authors.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Level5Controller">
+    <children>
+        <ImageView fx:id="playerImage" fitHeight="286.0" fitWidth="289.0" layoutX="28.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../pictures/prometeush.jpg" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="opponentImage" fitHeight="243.0" fitWidth="249.0" layoutX="1015.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../pictures/ethon.jpg" />
+            </image>
+        </ImageView>
+        <Text fx:id="playerName" fill="WHITE" layoutX="75.0" layoutY="522.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prometeusz" textAlignment="CENTER">
+            <font>
+                <Font size="21.0" />
+            </font>
+        </Text>
+        <Text fx:id="opponentName" fill="WHITE" layoutX="1115.0" layoutY="508.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ethon">
+            <font>
+                <Font size="21.0" />
+            </font>
+        </Text>
+        <Text fx:id="mainText" fill="WHITE" layoutX="47.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cel: Przeżyć ataki sępa" textAlignment="CENTER" wrappingWidth="1186.2607421875">
+            <font>
+                <Font name="System Bold" size="23.0" />
+            </font>
+        </Text>
+        <Text fx:id="descriptionText" fill="WHITE" layoutX="351.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ponieważ Prometeusz wygrał walkę z Zeusem, władca bogów kazał więc przywiązać go do skał Kaukazu. Codziennie o wschodzie Słońca przylatywał tam sęp/orzeł Ethon i wyjadał Prometeuszowi wątrobę, która odrastała przez resztę dnia i nocy. Zeus chciał, by męka Prometeusza trwała bez końca, jednak po wielu latach przerwał ją Herakles, zabijając ptaka strzałą z łuku. Jednak zanim to nastąpiło, Prometeusz musiał stoczyć nierówną walkę z nie tylko z Ethon-em ale również z samotnością, bólem i cierpieniem." textAlignment="JUSTIFY" wrappingWidth="578.82470703125">
+            <font>
+                <Font size="21.0" />
+            </font>
+        </Text>
+        <Button fx:id="nextButton" layoutX="562.0" layoutY="617.0" mnemonicParsing="false" onAction="#doNext" prefHeight="31.0" prefWidth="157.0" stylesheets="@button.css" text="Przejdź dalej" />
+    </children>
 </AnchorPane>

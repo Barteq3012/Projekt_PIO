@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class CampaignController {
 
-    private int levelCompleted = MenuController.level;
+    private int actualLevel = MenuController.level;
 
    /* public PassController(int levelCompleted)
     {
@@ -61,13 +61,15 @@ public class CampaignController {
     }
 
     @FXML
-    void fiveStart(ActionEvent event) {
-
+    void fiveStart(ActionEvent event) throws IOException {
+        AnchorPane lvl1 = FXMLLoader.load(getClass().getResource("/design/Level5.fxml"));
+        campAPain.getChildren().setAll(lvl1);
     }
 
     @FXML
-    void fourStart(ActionEvent event) {
-
+    void fourStart(ActionEvent event) throws IOException {
+        AnchorPane lvl4 = FXMLLoader.load(getClass().getResource("/design/Level4.fxml"));
+        campAPain.getChildren().setAll(lvl4);
     }
 
     @FXML
@@ -97,23 +99,23 @@ public class CampaignController {
         fourButton.setVisible(false);
         fiveButton.setVisible(false);
 
-        System.out.println(levelCompleted);
-        if(levelCompleted >= 1)
+        System.out.println(actualLevel);
+        if(actualLevel > 1)
         {
             twoButton.setVisible(true);
             twoLock.setVisible(false);
         }
-        if(levelCompleted >= 2)
+        if(actualLevel > 2)
         {
             threeButton.setVisible(true);
             threeLock.setVisible(false);
         }
-        if (levelCompleted >= 3)
+        if (actualLevel > 3)
         {
             fourButton.setVisible(true);
             fourLock.setVisible(false);
         }
-        if (levelCompleted >= 4)
+        if (actualLevel > 4)
         {
             fiveButton.setVisible(true);
             fiveLock.setVisible(false);

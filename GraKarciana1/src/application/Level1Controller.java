@@ -5,12 +5,20 @@ import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
+
 public class Level1Controller {
+
+    @FXML
+    private AnchorPane levelPane;
 
     @FXML
     private ImageView playerImage;
@@ -34,8 +42,14 @@ public class Level1Controller {
     private Button nextButton;
 
     @FXML
-    void doNext(ActionEvent event) {
+    void doNext(ActionEvent event) throws IOException {
         //uruchomienie poziomku
+        Campaign campaign = new Campaign();
+
+        AnchorPane table = FXMLLoader.load(getClass().getResource("/design/Table.fxml"));
+        levelPane.getChildren().setAll(table);
+        campaign.startLevel1(table);
+
     }
 
     @FXML

@@ -7,16 +7,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1280.0" styleClass="bodybg3" stylesheets="@Authors.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Level2Controller">
+<AnchorPane fx:id="levelPane" prefHeight="700.0" prefWidth="1280.0" styleClass="bodybg3" stylesheets="@Authors.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Level2Controller">
     <children>
         <ImageView fx:id="playerImage" fitHeight="286.0" fitWidth="289.0" layoutX="28.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../pictures/prometeush.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentImage" fitHeight="286.0" fitWidth="242.0" layoutX="1026.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentImage" fitHeight="270.0" fitWidth="203.0" layoutX="1057.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../pictures/hydra.jpg" />
+                <Image url="@../pictures/pandora.jpg" />
             </image>
         </ImageView>
         <Text fx:id="playerName" fill="WHITE" layoutX="75.0" layoutY="522.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prometeusz" textAlignment="CENTER">
@@ -24,17 +24,17 @@
                 <Font size="21.0" />
             </font>
         </Text>
-        <Text fx:id="opponentName" fill="WHITE" layoutX="1109.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hydra">
-            <font>
-                <Font size="21.0" />
-            </font>
-        </Text>
-        <Text fx:id="mainText" fill="WHITE" layoutX="47.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cel: Prometeusz podróżując po wzburzonym morzu, pełnym niebezpieczeństw, natrafia na Hydrę" textAlignment="CENTER" wrappingWidth="1186.2607421875">
+        <Text fx:id="mainText" fill="WHITE" layoutX="47.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cel: Wyjść cało ze spotkania ze szwiagierką" textAlignment="CENTER" wrappingWidth="1186.2607421875">
             <font>
                 <Font name="System Bold" size="23.0" />
             </font>
         </Text>
-        <Text fx:id="descriptionText" fill="WHITE" layoutX="351.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zazwyczaj Hydra czatowała na wędrowców zmierzających ścieżką łączącą Lakonię z Argolidą. Kiedy jednak nie zaspokoiła w ten sposób swego głodu, wyruszała pomiędzy okoliczne wioski. Niszczyła plony, rozszarpywała bydło, czyniąc w kraju spustoszenie." textAlignment="JUSTIFY" wrappingWidth="578.82470703125">
+        <Text fx:id="descriptionText" fill="WHITE" layoutX="351.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Siła Prometeusza nie podobała się bogom, czuli się zagrożeni. Apogeum nastąpiło gdy Prometeusz oszukał Zeusa który wskazał mało obfitą ofiarę. Zemsta Zeusa polegała na przekazaniu ludziom wszystkiego, co najgorsze. Z pomocą bogów na Olimpie stworzył on najpiękniejszą kobietę, Pandorę, która miała uwieść brata Prometeusza – Epimeteusza. Gdy się pobrali, Pandorę codziennie coraz bardziej kusiło, by otworzyć puszkę, aż w końcu pewnego dnia, gdy jej męża nie było w domu otworzyła tajemniczą puszkę. Wtedy w jednej chwili po świecie rozniosły się wszystkie plagi, jakie człowiek mógłby sobie wyobrazić…" textAlignment="JUSTIFY" wrappingWidth="578.82470703125">
+            <font>
+                <Font size="21.0" />
+            </font>
+        </Text>
+        <Text fx:id="opponentName" fill="WHITE" layoutX="1120.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pandora">
             <font>
                 <Font size="21.0" />
             </font>

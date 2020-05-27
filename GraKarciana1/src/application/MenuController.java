@@ -18,7 +18,7 @@ public class MenuController {
 
 	Duel duel;
 
-	static int level = 2; //poziom w kampanii
+	static int level = 5; //poziom w kampanii
 
 	@FXML
     private Pane menuPane;
