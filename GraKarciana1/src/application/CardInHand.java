@@ -437,6 +437,10 @@ public class CardInHand {
             if (searchCard(13) != -1) {
                 return supDraw(searchCard(13)); //strzała jeśli mamy w ręku krew hydry
             }
+
+            if (searchCard(12) != -1) {
+                return supDraw(searchCard(12)); //łuk jak nie strzała jeśli mamy w ręku krew hydry
+            }
         }
 
         // jeśli gracz nie jest odporny na obrażenia to enemy zada obrażenia
