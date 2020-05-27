@@ -18,6 +18,8 @@ public class MenuController {
 
 	Duel duel;
 
+	static int level = 2; //poziom w kampanii
+
 	@FXML
     private Pane menuPane;
 
@@ -25,8 +27,9 @@ public class MenuController {
 	private AnchorPane menuAnchor;
 
     @FXML
-    void actionOfCampaignButton(ActionEvent event) {
-    	
+    void actionOfCampaignButton(ActionEvent event) throws IOException {
+		AnchorPane campaign = FXMLLoader.load(getClass().getResource("/design/Campaign.fxml"));
+		menuAnchor.getChildren().setAll(campaign);
     	
     }
     
