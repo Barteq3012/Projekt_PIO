@@ -29,5 +29,10 @@
          <font>
             <Font name="Open Sans" size="29.0" />
          </font></Button>
+      <Button fx:id="campaignButton" layoutX="393.0" layoutY="568.0" mnemonicParsing="false" onAction="#backToCampaign" prefHeight="57.0" prefWidth="493.0" text="Powrót do Kampanii">
+         <font>
+            <Font name="Open Sans" size="29.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
