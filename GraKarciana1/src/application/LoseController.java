@@ -38,6 +38,16 @@ public class LoseController {
     private Button menuButton;
 
     @FXML
+    private Button campaignButton;
+
+    @FXML
+    void backToCampaign(ActionEvent event) throws IOException {
+
+        AnchorPane camp = FXMLLoader.load(getClass().getResource("/design/Campaign.fxml"));
+        scoreAnchorPane.getChildren().setAll(camp);
+    }
+
+    @FXML
     void backToMenu(ActionEvent event) throws IOException {
         AnchorPane menu = FXMLLoader.load(getClass().getResource("/design/Menu.fxml"));
         scoreAnchorPane.getChildren().setAll(menu);
@@ -46,7 +56,15 @@ public class LoseController {
     @FXML
     private void initialize() {
 
+        menuButton.setVisible(false);
+        campaignButton.setVisible(false);
 
+        if(Main.mode == 1) {
+            campaignButton.setVisible(true);
+        }
+        else {
+            menuButton.setVisible(true);
+        }
 
     }
 

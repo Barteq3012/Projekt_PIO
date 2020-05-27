@@ -17,7 +17,9 @@ public class Duel{
 
     public void startDuel() {
 
-        game = new Game(2,table, "Promek", "Kartek", 80, 10, 80, 10);
+        Main.mode = 2;
+
+        game = new Game(0,table, "Promek", "Kartek", 80, 10, 80, 10);
 
         playerDeck = new DeckOfCards(ReadFile.level);
         enemyDeck = new DeckOfCards(ReadFile.level);

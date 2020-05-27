@@ -7,7 +7,6 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -21,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class Game {
 
@@ -55,18 +55,18 @@ public class Game {
     public static boolean ready = false;
     private boolean isEnd = false;
 
-    public static int mode; // 1- kampania, 2 - pojedynek
+    public static int level;
 
-    public Game(int mode, Pane table, String playerName, String opponentName, int playerHp, int playerSp, int enemyHp, int enemySp) {
+    public Game(int level, Pane table, String playerName, String opponentName, int playerHp, int playerSp, int enemyHp, int enemySp) {
 
-        Game.mode = mode;
+        Game.level = level;
         Game.table = table;
 
         playerCardInHand = new CardInHand(140, 530, table);
         enemyCardInHand = new CardInHand(140, 10, table); //-150
 
-        player = new Player(playerName, 1,playerHp, playerSp, playerCardInHand);
-        enemy = new Player(opponentName,2,enemyHp, enemySp, enemyCardInHand);
+        player = new Player(playerName, 1, playerHp, playerSp, playerCardInHand);
+        enemy = new Player(opponentName, 2, enemyHp, enemySp, enemyCardInHand);
 
         playerCardInHand.setOwner(player);
         enemyCardInHand.setOwner(enemy);
@@ -96,8 +96,8 @@ public class Game {
 
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Pass.fxml"));
-                    Pane passboard =  fxmlLoader.load();
-                   // table.getChildren().setAll(passboard);
+                    Pane passboard = fxmlLoader.load();
+                    // table.getChildren().setAll(passboard);
                     Stage window = Main.primaryStage2;
                     window.getScene().setRoot(passboard);
                     window.show();
@@ -112,6 +112,8 @@ public class Game {
         //dobiera początkowe karty, po zakońćzeniu animacji game ustawia na ready
         playerCardInHand.initHand(playerSmallDeck);
         enemyCardInHand.initHand(enemySmallDeck);
+
+        setStack();
 
         // kliknięcie powoduje wejście do metody nextTurn() jeśli gra jest gotowa, tzn. kiedy oczekiwana jest interakcja użytkownika
         playerCardInHand.hand.setOnMouseClicked(e -> {
@@ -237,7 +239,7 @@ public class Game {
                     checkEnd();
                 }
 
-                if(!isEnd) {
+                if (!isEnd) {
 
                     enemy.card = enemyCardInHand.getCardFromEnemyHand(); //losuje kartę z ręki, dalej to samo, co u gracza
                     enemyCardInHand.returnToHandFromCubby(); //przywraca karty do ręki ze schowka
@@ -314,11 +316,13 @@ public class Game {
                 if (playerSmallDeck.getSize() > 0) {
 
                     playerCardInHand.drawCardsFromSmallDeck(playerSmallDeck);
+                    setStack();
                 }
 
                 if (enemySmallDeck.getSize() > 0) {
 
                     enemyCardInHand.drawCardsFromSmallDeck(enemySmallDeck);
+                    setStack();
                 }
 
                 // po dobraniu, co dalej
@@ -354,15 +358,12 @@ public class Game {
                     scores.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
-                            if (player.hp > enemy.hp)
-                            {
+                            if (player.hp > enemy.hp) {
                                 win();
-                               // ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
-                            }
-                            else
-                            {
+                                // ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                            } else {
                                 lose();
-                               // ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                                // ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
                             }
                         }
                     });
@@ -377,25 +378,23 @@ public class Game {
                         player.checkEffects();
                         setPoints();
                         checkEnd();
-                        if(!isEnd) {
+                        if (!isEnd) {
                             nextTurn();
                         }
-                    }
-                    else if(!playerCardInHand.emptyHand() && enemyCardInHand.emptyHand()) {
+                    } else if (!playerCardInHand.emptyHand() && enemyCardInHand.emptyHand()) {
 
                         enemy.checkEffects();
                         player.checkEffects();
                         setPoints();
                         checkEnd();
-                        if(!isEnd) {
+                        if (!isEnd) {
                             Game.ready = true;
                         }
-                    }
-                    else {
+                    } else {
                         player.checkEffects();
                         setPoints();
                         checkEnd();
-                        if(!isEnd) {
+                        if (!isEnd) {
                             Game.ready = true;
                         }
                     }
@@ -416,15 +415,12 @@ public class Game {
             scores.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    if (player.hp > enemy.hp)
-                    {
+                    if (player.hp > enemy.hp) {
                         win();
-                       // ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
-                    }
-                    else
-                    {
+                        // ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                    } else {
                         lose();
-                       // ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+                        // ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
                     }
                 }
             });
@@ -461,16 +457,22 @@ public class Game {
         ft.play();
     }
 
-   public void setPoints() {
+    public void setPoints() {
 
-       textPlayerHp.setText(String.valueOf(player.hp));
-       textPlayerSp.setText(String.valueOf(player.sp));
-       textOpponentSp.setText(String.valueOf(enemy.sp));
-       textOpponentHp.setText(String.valueOf(enemy.hp));
-   }
+        textPlayerHp.setText(String.valueOf(player.hp));
+        textPlayerSp.setText(String.valueOf(player.sp));
+        textOpponentSp.setText(String.valueOf(enemy.sp));
+        textOpponentHp.setText(String.valueOf(enemy.hp));
+    }
 
-    private void startPlayerName()
-    {
+    public void setStack() {
+
+        textPlayerStack.setText(String.valueOf(playerSmallDeck.getSize()));
+        textOpponentStack.setText(String.valueOf(enemySmallDeck.getSize()));
+
+    }
+
+    private void startPlayerName() {
 
         textPlayerName.setText(player.name);
         textPlayerName.setX(20);
@@ -480,8 +482,7 @@ public class Game {
         table.getChildren().add(textPlayerName);
     }
 
-    private void startPlayerHp()
-    {
+    private void startPlayerHp() {
         textPlayerHp.setText(String.valueOf(player.hp));
         textPlayerHp.setX(1200);
         textPlayerHp.setY(480);
@@ -490,8 +491,7 @@ public class Game {
         table.getChildren().add(textPlayerHp);
     }
 
-    private void startPlayerSp()
-    {
+    private void startPlayerSp() {
         textPlayerSp.setText(String.valueOf(player.sp));
         textPlayerSp.setX(1205);
         textPlayerSp.setY(610);
@@ -500,8 +500,7 @@ public class Game {
         table.getChildren().add(textPlayerSp);
     }
 
-    private void startPlayerStack()
-    {
+    private void startPlayerStack() {
         //1173 107
         imgPlayerCardStack.setImage(imgCardStack);
         imgPlayerCardStack.setFitHeight(135.0);
@@ -514,12 +513,11 @@ public class Game {
 
     }
 
-    private void startPlayerNumberOfStack()
-    {
-        textPlayerStack.setText(String.valueOf(player.numberOfCardsOnStack));
-        textPlayerStack.setFont(Font.font("System", FontWeight.MEDIUM, FontPosture.REGULAR, 25));
+    private void startPlayerNumberOfStack() {
+        textPlayerStack.setText(String.valueOf(playerSmallDeck.getSize()));
+        textPlayerStack.setFont(Font.font("System", FontWeight.MEDIUM, FontPosture.REGULAR, 16));
         textPlayerStack.setFill(Color.WHITE);
-        textPlayerStack.setLayoutX(87.0);
+        textPlayerStack.setLayoutX(81.0);
         textPlayerStack.setLayoutY(612.0);
         textPlayerStack.setStrokeType(StrokeType.OUTSIDE);
         textPlayerStack.setStrokeWidth(0.0);
@@ -527,8 +525,7 @@ public class Game {
         table.getChildren().add(textPlayerStack);
     }
 
-    private void startOpponentName()
-    {
+    private void startOpponentName() {
 
         textOpponentName.setText(enemy.name);
         textOpponentName.setX(1180);
@@ -538,8 +535,7 @@ public class Game {
         table.getChildren().add(textOpponentName);
     }
 
-    private void startOpponentHp()
-    {
+    private void startOpponentHp() {
         textOpponentHp.setText(String.valueOf(enemy.hp));
         textOpponentHp.setX(40);
         textOpponentHp.setY(110);
@@ -548,8 +544,7 @@ public class Game {
         table.getChildren().add(textOpponentHp);
     }
 
-    private void startOpponentSp()
-    {
+    private void startOpponentSp() {
         textOpponentSp.setText(String.valueOf(enemy.sp));
         textOpponentSp.setX(40);
         textOpponentSp.setY(225);
@@ -558,8 +553,7 @@ public class Game {
         table.getChildren().add(textOpponentSp);
     }
 
-    private void startOpponentStack()
-    {
+    private void startOpponentStack() {
         //1173 107
         imgOpponentCardStack.setImage(imgCardStack);
         imgOpponentCardStack.setFitHeight(135.0);
@@ -572,10 +566,9 @@ public class Game {
 
     }
 
-    private void startOpponentNumberOfStack()
-    {
-        textOpponentStack.setText(String.valueOf(enemy.numberOfCardsOnStack));
-        textOpponentStack.setFont(Font.font("System", FontWeight.MEDIUM, FontPosture.REGULAR, 25));
+    private void startOpponentNumberOfStack() {
+        textOpponentStack.setText(String.valueOf(enemySmallDeck.getSize()));
+        textOpponentStack.setFont(Font.font("System", FontWeight.MEDIUM, FontPosture.REGULAR, 16));
         textOpponentStack.setFill(Color.WHITE);
         textOpponentStack.setLayoutX(1237.0);
         textOpponentStack.setLayoutY(222.0);
@@ -585,8 +578,7 @@ public class Game {
         table.getChildren().add(textOpponentStack);
     }
 
-    void showButtonScores()
-    {
+    void showButtonScores() {
 
         scores.setLayoutX(537.0);
         scores.setLayoutY(331.0);
@@ -598,8 +590,7 @@ public class Game {
         table.getChildren().add(scores);
     }
 
-    void passButton()
-    {
+    void passButton() {
         pass.setLayoutX(537.0);
         pass.setLayoutY(331.0);
         pass.setMnemonicParsing(false);
@@ -613,31 +604,33 @@ public class Game {
     void win() {
 
         try {
+            if (level == 1) {
+                ReadFile.level = 2;
+                ReadFile.setLevel("2");
+            } else if (level == 2) {
+                ReadFile.level = 3;
+                ReadFile.setLevel("3");
+            } else if (level == 3) {
+                ReadFile.level = 4;
+                ReadFile.setLevel("4");
+            } else if (level == 4) {
+                ReadFile.level = 5;
+                ReadFile.setLevel("5");
+            } else if (level == 5) {
+                ReadFile.level = 6;
+                ReadFile.setLevel("6");
+            }
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
 
-            /*
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Pass.fxml"));
-                    Pane passboard =  fxmlLoader.load();
-                   // table.getChildren().setAll(passboard);
-                    Stage window = Main.primaryStage2;
-                    window.getScene().setRoot(passboard);
-                    window.show();
-             */
+        try {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Win.fxml"));
-            Pane winPane =  fxmlLoader.load();
+            Pane winPane = fxmlLoader.load();
 
             Stage window = Main.primaryStage2;
 
-            /* Stare
-            Stage scoreStage = new Stage();
-            scoreStage.setScene(new Scene(winPane));
-            scoreStage.show();
-            scoreStage.setAlwaysOnTop(false);
-            scoreStage.setOpacity(1);
-            scoreStage.setTitle("Wynik");
-            scoreStage.getIcons().add(new Image("pictures/icon.png"));
-
-             */
             System.out.println("Wynik");
 
             DropShadow ds = new DropShadow();
@@ -676,12 +669,11 @@ public class Game {
 
     }
 
-    void lose()
-    {
+    void lose() {
         try {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Lose.fxml"));
-            Pane losePane =  fxmlLoader.load();
+            Pane losePane = fxmlLoader.load();
 
             Stage window = Main.primaryStage2;
 

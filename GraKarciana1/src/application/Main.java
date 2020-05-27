@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	public static int code = 0;
+	public static int mode; // 1 - kampania, 2 - duel
 	
 	static Stage primaryStage2;
 	

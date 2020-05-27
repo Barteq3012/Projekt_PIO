@@ -256,6 +256,6 @@ public class SmallDeckOfCards {
 
     public int getSize() {
 
-        return size;
+        return smallDeck.size();
     }
 }

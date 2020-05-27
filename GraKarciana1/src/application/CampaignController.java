@@ -100,22 +100,22 @@ public class CampaignController {
         fiveButton.setVisible(false);
 
         System.out.println(actualLevel);
-        if(actualLevel > 1)
+        if(ReadFile.level > 1)
         {
             twoButton.setVisible(true);
             twoLock.setVisible(false);
         }
-        if(actualLevel > 2)
+        if(ReadFile.level > 2)
         {
             threeButton.setVisible(true);
             threeLock.setVisible(false);
         }
-        if (actualLevel > 3)
+        if (ReadFile.level > 3)
         {
             fourButton.setVisible(true);
             fourLock.setVisible(false);
         }
-        if (actualLevel > 4)
+        if (ReadFile.level > 4)
         {
             fiveButton.setVisible(true);
             fiveLock.setVisible(false);

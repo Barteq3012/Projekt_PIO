@@ -41,14 +41,12 @@ public class MenuController {
     		Pane tableRoot = fxmlLoader.load();
 
 			duel = new Duel(tableRoot);
-			Campaign campaign = new Campaign();
 
 			Stage window = Main.primaryStage2;
 			window.getScene().setRoot(tableRoot);
 			window.show();
 
-			//duel.startDuel();
-			campaign.startLevel5(tableRoot);
+			duel.startDuel();
   
     	} catch (Exception e) {
     		System.err.println(e.getMessage());
