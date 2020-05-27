@@ -30,6 +30,8 @@ public class Game {
     private CardInHand playerCardInHand;
     private CardInHand enemyCardInHand;
 
+
+
     // tworzy rywali
     public Player player;
     public Player enemy;
@@ -73,6 +75,7 @@ public class Game {
     }
 
     public void startGame() {
+
 
         // przypisuje wskazniki; gracz ma namiar na swojego przciwnika i na odwrot
         player.setMyEnemy(enemy);
@@ -625,43 +628,54 @@ public class Game {
         }
 
         try {
+            if(level != 5) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Win.fxml"));
+                Pane winPane = fxmlLoader.load();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/Win.fxml"));
-            Pane winPane = fxmlLoader.load();
+                Stage window = Main.primaryStage2;
 
-            Stage window = Main.primaryStage2;
+                System.out.println("Wynik");
 
-            System.out.println("Wynik");
+                DropShadow ds = new DropShadow();
+                ds.setOffsetY(10.0f);
+                ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
 
-            DropShadow ds = new DropShadow();
-            ds.setOffsetY(10.0f);
-            ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+                Text scorePlayer = new Text();
+                Text scoreOpponent = new Text();
 
-            Text scorePlayer = new Text();
-            Text scoreOpponent = new Text();
+                scorePlayer.setEffect(ds);
+                scorePlayer.setText(String.valueOf(player.hp));
+                scorePlayer.setFill(Color.WHITE);
+                scorePlayer.setX(160);
+                scorePlayer.setY(420);
+                scorePlayer.setTextAlignment(TextAlignment.CENTER);
+                scorePlayer.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, 80));
 
-            scorePlayer.setEffect(ds);
-            scorePlayer.setText(String.valueOf(player.hp));
-            scorePlayer.setFill(Color.WHITE);
-            scorePlayer.setX(160);
-            scorePlayer.setY(420);
-            scorePlayer.setTextAlignment(TextAlignment.CENTER);
-            scorePlayer.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, 80));
+                scoreOpponent.setEffect(ds);
+                scoreOpponent.setText(String.valueOf(enemy.hp));
+                scoreOpponent.setFill(Color.WHITE);
+                scoreOpponent.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, 80));
+                scoreOpponent.setX(960);
+                scoreOpponent.setY(420);
+                scoreOpponent.setTextAlignment(TextAlignment.CENTER);
 
-            scoreOpponent.setEffect(ds);
-            scoreOpponent.setText(String.valueOf(enemy.hp));
-            scoreOpponent.setFill(Color.WHITE);
-            scoreOpponent.setFont(Font.font("System", FontWeight.BOLD, FontPosture.REGULAR, 80));
-            scoreOpponent.setX(960);
-            scoreOpponent.setY(420);
-            scoreOpponent.setTextAlignment(TextAlignment.CENTER);
+                winPane.getChildren().addAll(scorePlayer);
+                winPane.getChildren().addAll(scoreOpponent);
 
-            winPane.getChildren().addAll(scorePlayer);
-            winPane.getChildren().addAll(scoreOpponent);
+                window.getScene().setRoot(winPane); /* nowe */
+                window.show();
+            }
+            else
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/design/End.fxml"));
+                Pane endPane = fxmlLoader.load();
 
-            window.getScene().setRoot(winPane); /* nowe */
-            window.show();
+                Stage window = Main.primaryStage2;
 
+                System.out.println("koniec");
+                window.getScene().setRoot(endPane); /* nowe */
+                window.show();
+            }
 
         } catch (Exception e) {
             System.err.println(e.getMessage());

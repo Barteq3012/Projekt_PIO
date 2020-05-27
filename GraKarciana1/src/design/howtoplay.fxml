@@ -59,7 +59,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="43.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Celem gry jest pokonanie wszystkich przeciwników i zdobycia Ognia Prometejskiego. " wrappingWidth="897.6953125">
+      <Text fill="WHITE" layoutX="43.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gra jest historią Prometeusza i jego mitologicznych przygód. " wrappingWidth="897.6953125">
          <font>
             <Font size="20.0" />
          </font>
