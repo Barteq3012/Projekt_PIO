@@ -14,7 +14,7 @@
                 <Image url="@../pictures/prometeush.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentImage" fitHeight="243.0" fitWidth="249.0" layoutX="1015.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentImage" fitHeight="286.0" fitWidth="217.0" layoutX="1036.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../pictures/ethon.jpg" />
             </image>
@@ -24,7 +24,7 @@
                 <Font size="21.0" />
             </font>
         </Text>
-        <Text fx:id="opponentName" fill="WHITE" layoutX="1115.0" layoutY="508.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ethon">
+        <Text fx:id="opponentName" fill="WHITE" layoutX="1115.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ethon">
             <font>
                 <Font size="21.0" />
             </font>

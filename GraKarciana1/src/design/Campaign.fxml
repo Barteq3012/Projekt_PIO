@@ -14,7 +14,7 @@
       <Button fx:id="twoButton" layoutX="134.0" layoutY="242.0" mnemonicParsing="false" onAction="#twoStart" prefHeight="32.0" prefWidth="99.0" stylesheets="@button.css" text="Graj!" />
       <Button fx:id="threeButton" layoutX="1069.0" layoutY="130.0" mnemonicParsing="false" onAction="#threeStart" prefHeight="32.0" prefWidth="99.0" stylesheets="@button.css" text="Graj!" />
       <Button fx:id="fourButton" layoutX="1069.0" layoutY="242.0" mnemonicParsing="false" onAction="#fourStart" prefHeight="32.0" prefWidth="99.0" stylesheets="@button.css" text="Graj!" />
-      <Button fx:id="fiveButton" layoutX="591.0" layoutY="459.0" mnemonicParsing="false" onAction="#fiveStart" prefHeight="32.0" prefWidth="99.0" stylesheets="@button.css" text="Graj!" />
+      <Button fx:id="fiveButton" layoutX="575.0" layoutY="111.0" mnemonicParsing="false" onAction="#fiveStart" prefHeight="32.0" prefWidth="99.0" stylesheets="@button.css" text="Graj!" />
       <Text fill="WHITE" layoutX="121.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preludium" textAlignment="CENTER" wrappingWidth="124.0">
          <font>
             <Font name="Open Sans Bold" size="22.0" />
@@ -47,7 +47,7 @@
             <DropShadow />
          </effect>
       </Text>
-      <Text fill="WHITE" layoutX="503.0" layoutY="423.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Krwisty Finał" textAlignment="CENTER" wrappingWidth="274.0">
+      <Text fill="WHITE" layoutX="487.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Krwisty Finał" textAlignment="CENTER" wrappingWidth="274.0">
          <font>
             <Font name="Open Sans Bold" size="37.0" />
          </font>
@@ -83,7 +83,7 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <ImageView fx:id="fiveLock" fitHeight="42.0" fitWidth="35.0" layoutX="623.0" layoutY="458.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="fiveLock" fitHeight="42.0" fitWidth="35.0" layoutX="607.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../pictures/lock.png" />
          </image>

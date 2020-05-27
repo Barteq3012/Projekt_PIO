@@ -478,10 +478,10 @@ public class Game {
     private void startPlayerName() {
 
         textPlayerName.setText(player.name);
-        textPlayerName.setX(20);
-        textPlayerName.setY(670);
+        textPlayerName.setX(5);
+        textPlayerName.setY(660);
         textPlayerName.setFill(Color.WHITE);
-        textPlayerName.setFont(Font.font("System", FontWeight.MEDIUM, FontPosture.REGULAR, 24));
+        textPlayerName.setFont(Font.font("System", FontWeight.MEDIUM, FontPosture.REGULAR, 20));
         table.getChildren().add(textPlayerName);
     }
 

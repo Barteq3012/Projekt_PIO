@@ -14,7 +14,7 @@
                 <Image url="@../pictures/prometeush.jpg" />
             </image>
         </ImageView>
-        <ImageView fx:id="opponentImage" fitHeight="286.0" fitWidth="242.0" layoutX="1026.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="opponentImage" fitHeight="286.0" fitWidth="242.0" layoutX="1041.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../pictures/hydra.jpg" />
             </image>
@@ -24,12 +24,12 @@
                 <Font size="21.0" />
             </font>
         </Text>
-        <Text fx:id="opponentName" fill="WHITE" layoutX="1109.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hydra">
+        <Text fx:id="opponentName" fill="WHITE" layoutX="1119.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hydra">
             <font>
                 <Font size="21.0" />
             </font>
         </Text>
-        <Text fx:id="mainText" fill="WHITE" layoutX="47.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cel: Prometeusz podróżując po wzburzonym morzu, pełnym niebezpieczeństw, natrafia na Hydrę" textAlignment="CENTER" wrappingWidth="1186.2607421875">
+        <Text fx:id="mainText" fill="WHITE" layoutX="47.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cel: Prometeusz podróżując po wzburzonym morzu natrafia na Hydrę" textAlignment="CENTER" wrappingWidth="1186.2607421875">
             <font>
                 <Font name="System Bold" size="23.0" />
             </font>

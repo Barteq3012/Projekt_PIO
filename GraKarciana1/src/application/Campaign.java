@@ -16,7 +16,7 @@ public class Campaign {
 
         Main.mode = 1;
 
-        game = new Game(1,table, "Promek", "Helios", 80, 10, 80, 10);
+        game = new Game(1,table, "Prometeusz", "Helios", 80, 10, 80, 10);
 
         playerDeck = new DeckOfCards(ReadFile.level);
         enemyDeck = new DeckOfCards(ReadFile.level);
@@ -31,7 +31,7 @@ public class Campaign {
 
         Main.mode = 1;
 
-        game = new Game(2,table, "Promek", "Pandora", 80, 10, 80, 10);
+        game = new Game(2,table, "Prometeusz", "Pandora", 80, 10, 80, 10);
 
         playerDeck = new DeckOfCards(ReadFile.level);
         enemyDeck = new DeckOfCards(ReadFile.level);
@@ -46,7 +46,7 @@ public class Campaign {
 
         Main.mode = 1;
 
-        game = new Game(3,table, "Promek", "Hydra", 80, 10, 80, 10);
+        game = new Game(3,table, "Prometeusz", "Hydra", 80, 10, 80, 10);
 
         playerDeck = new DeckOfCards(ReadFile.level);
         enemyDeck = new DeckOfCards(ReadFile.level);
@@ -61,7 +61,7 @@ public class Campaign {
 
         Main.mode = 1;
 
-        game = new Game(4,table, "Promek", "Zeus", 80, 10, 80, 10);
+        game = new Game(4,table, "Prometeusz", "Zeus", 80, 10, 80, 10);
 
         playerDeck = new DeckOfCards(ReadFile.level);
         enemyDeck = new DeckOfCards(ReadFile.level);
@@ -76,7 +76,7 @@ public class Campaign {
 
         Main.mode = 1;
 
-        game = new Game(5,table, "Promek", "Ethon", 80, 10, 80, 10);
+        game = new Game(5,table, "Prometeusz", "Ethon", 80, 10, 80, 10);
 
         playerDeck = new DeckOfCards(ReadFile.level);
         enemyDeck = new DeckOfCards(ReadFile.level);
