@@ -12,9 +12,9 @@ public class SmallDeckOfCards {
 
     private int size = 0;
 
-    int numberOfWeakCards = 0;
-    int numberOfMediumCards = 0;
-    int numberOfGoodCards = 0;
+    public int numberOfWeakCards = 0;
+    public int numberOfMediumCards = 0;
+    public int numberOfGoodCards = 0;
 
 
     public SmallDeckOfCards() {

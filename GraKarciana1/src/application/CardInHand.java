@@ -1218,7 +1218,7 @@ public class CardInHand {
         return null;
     }
 
-    private int searchCard(int id) {
+    public int searchCard(int id) {
 
         for (Card card : cardsInHand) {
 
@@ -1230,7 +1230,7 @@ public class CardInHand {
         return -1;
     }
 
-    private Card supDraw(int id) {
+    public Card supDraw(int id) {
 
         Card drawCard = cardsInHand.get(id);
         cardsInHand.remove(drawCard);
@@ -1361,7 +1361,7 @@ public class CardInHand {
         }
     }
 
-    private void moveCard() {
+    public void moveCard() {
 
         for (int i = 0; i < 11; i++) {
 
@@ -1422,5 +1422,9 @@ public class CardInHand {
                 }
             }
         }
+    }
+
+    public int getPositionX() {
+        return positionX;
     }
 }
