@@ -113,7 +113,7 @@ public class CardTest {
     }
 
     @Test
-    public void isCard() {
+    public void dazzleTest() {
 
         int previousPlayerHp = player.hp;
         int previousPlayerSp = player.sp;
