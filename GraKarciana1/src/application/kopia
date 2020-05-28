@@ -12,7 +12,7 @@ public class ReadFile {
 
     public ReadFile() {
 
-        InputStream input = getClass().getResourceAsStream("/config/level.txt");
+        InputStream input = getClass().getResourceAsStream("/config/level.sav");
 
         try {
             scan = new Scanner(input);
@@ -29,19 +29,24 @@ public class ReadFile {
 
         Scanner scan = null;
 
-        //InputStream input = ReadFile.class.getResourceAsStream("/config/level.txt");
-        File file = new File(ReadFile.class.getResource("/config/level.txt").toURI());
+        InputStream input = ReadFile.class.getResourceAsStream("/config/level.sav");
+        //File file = new File(ReadFile.class.getResource("/config/level.txt").toURI());
 
-        scan = new Scanner(file);
+        scan = new Scanner(input);
         level = scan.nextInt();
-       // System.out.println(level);
+        // System.out.println(level);
         scan.close();
     }
 
     public static void setLevel(String level) throws IOException, URISyntaxException {
 
-        File writeFile = new File(ReadFile.class.getResource("/config/level.txt").toURI());
-        FileWriter writer = new FileWriter(writeFile,false);
+        File file = new File("level.txt");
+        if(!file.exists()) {
+            file.createNewFile();
+        }
+
+        //  File writeFile = new File(ReadFile.class.getResource("/config/level.txt").toURI());
+        FileWriter writer = new FileWriter(file,false);
         writer.write(level);
         writer.close();
     }

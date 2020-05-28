@@ -29,6 +29,7 @@
                <font>
                   <Font size="18.0" />
                </font></Button>
+            <Button fx:id="openFileButton" layoutX="1135.0" layoutY="641.0" mnemonicParsing="false" onAction="#openFile" prefHeight="30.0" prefWidth="111.0" text="Wczytaj zapis gry" />
          </children>
       </Pane>
    </children>

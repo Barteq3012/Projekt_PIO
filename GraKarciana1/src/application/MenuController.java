@@ -1,7 +1,8 @@
 package application;
 
-import java.io.IOException;
+import java.io.*;
 
+import com.sun.glass.ui.CommonDialogs;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -25,6 +27,9 @@ public class MenuController {
 
 	@FXML
 	private AnchorPane menuAnchor;
+
+	@FXML
+	private Button openFileButton;
 
     @FXML
     void actionOfCampaignButton(ActionEvent event) throws IOException {
@@ -102,5 +107,46 @@ public class MenuController {
     	}
     }
 
+	@FXML
+	void openFile(ActionEvent event) throws FileNotFoundException {
+		Stage openStage = new Stage();
+    	System.out.println("otworz");
+		FileChooser filechoose = new FileChooser();
+		filechoose.setTitle("Wybierz zapis gry");
+		filechoose.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("Save Files", "*.sav")
+		);
+
+		//Set to user directory or go to default if cannot access
+		String userDirectoryString = System.getProperty("user.home");
+		File userDirectory = new File(userDirectoryString);
+		if(!userDirectory.canRead()) {
+			userDirectory = new File("c:/");
+		}
+		filechoose.setInitialDirectory(userDirectory);
+
+		//filechoose.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("Save Files", "*.sav"));
+
+		File selectedFile = filechoose.showOpenDialog(openStage);
+		if (selectedFile != null && getFileExtension(selectedFile).equals("sav")) {
+
+			InputStream input = new FileInputStream(selectedFile);
+			System.out.println(input);
+			ReadFile.getLevelByOpen(input);
+		}
+		else {
+			System.out.println("File selection cancelled.");
+			//System.out.println(getFileExtension(selectedFile));
+		}
+
+
+	}
+
+	private static String getFileExtension(File file) {
+		String fileName = file.getName();
+		if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+			return fileName.substring(fileName.lastIndexOf(".")+1);
+		else return "";
+	}
 }
 
